@@ -1,0 +1,46 @@
+.btn.btn-outline-primary{
+    color:green
+}
+.hover-effect:hover {
+    color:#36a189;
+  }
+  .card {
+    height: 250px;
+    width: 200px;
+    overflow: hidden; /* Prevent overflow */
+    position: relative; /* Ensure proper positioning of overlay content */
+  }
+  
+  .card img {
+    object-fit: cover; /* Adjust as needed (e.g., 'contain') */
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Common styles for responsiveness */
+  .col-3 {
+    width: 25%;
+    padding: 5px;
+  }
+  
+  /* Media queries for different screen sizes and orientations */
+  @media (max-width: 992px) {
+    /* Tablets and smaller screens */
+    .col-3 {
+      width: 33.33%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    /* Mobile landscape and smaller */
+    .col-3 {
+      width: 50%;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    /* Mobile portrait and smaller */
+    .col-3 {
+      width: 100%;
+    }
+  }  

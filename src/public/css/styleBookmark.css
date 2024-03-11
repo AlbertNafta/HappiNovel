@@ -1,0 +1,626 @@
+.history{
+	display: flex;
+      justify-content: center;
+      align-items: center;
+	
+}
+
+
+.all-his{
+    
+	
+    max-width : 1280px;
+    /* Nếu ông muốn max-width hoàn tòn thì dùng cái này */
+    /* margin-left: calc((100% - 1280px) / 2);
+    margin-right: calc((100% - 1280px) / 2); */
+
+    /* Còn cái này là căn lề manual theo ý ông :V */
+    margin-left: 125px;
+    margin-right: 125px
+}
+
+
+@font-face {
+	 font-family: OpenSans;
+	 src: url(/fonts/OpenSans-Regular.ttf?ac568e1f1b394b9786bdba436229c846);
+}
+@font-face {
+	 font-family: OpenSans;
+	 font-weight: 700;
+	 src: url(/fonts/OpenSans-Bold.ttf?11d42620ac71ab231c13032210187b70);
+}
+.all-his *, .all-his :after, .all-his :before {
+	 box-sizing: border-box;
+}
+.all-his header, .all-his main, .all-his section {
+	 display: block;
+}
+ .all-his [tabindex="-1"]:focus:not(:focus-visible) {
+	 outline: 0 !important;
+}
+ .all-his h4 {
+	 margin-bottom: 0.5rem;
+	 margin-top: 0;
+}
+ .all-his ul {
+	 margin-bottom: 1rem;
+}
+ .all-his ul {
+	 margin-top: 0;
+}
+ .all-his a {
+	 color: #007bff;
+}
+ .all-his a:hover {
+	 color: #0056b3;
+	 text-decoration: underline;
+}
+ .all-his img {
+	 border-style: none;
+}
+ .all-his img {
+	 vertical-align: middle;
+}
+ .all-his button:focus:not(:focus-visible) {
+	 outline: 0;
+}
+ .all-his [type=button]:not(:disabled), .all-his [type=reset]:not(:disabled), .all-his [type=submit]:not(:disabled), .all-his button:not(:disabled) {
+	 cursor: pointer;
+}
+ .all-his ::-webkit-file-upload-button {
+	 -webkit-appearance: button;
+	 font: inherit;
+}
+ .all-his .container {
+	 margin-left: auto;
+	 margin-right: auto;
+	 padding-left: 15px;
+	 padding-right: 15px;
+	 width: 100%;
+}
+ .all-his .row {
+	 display: flex;
+	 flex-wrap: wrap;
+	 margin-left: -15px;
+	 margin-right: -15px;
+}
+ .all-his .col-12, .all-his .col-lg-3 {
+	 padding-left: 15px;
+	 padding-right: 15px;
+	 position: relative;
+	 width: 100%;
+}
+ .all-his .col-12 {
+	 flex: 0 0 100%;
+	 max-width: 100%;
+}
+ @media (min-width: 992px) {
+	 .all-his .col-lg-3 {
+		 flex: 0 0 25%;
+		 max-width: 25%;
+	}
+}
+ .all-his .clearfix:after {
+	 clear: both;
+	 content: "";
+	 display: block;
+}
+ .all-his .d-none {
+	 display: none !important;
+}
+ .all-his .d-block {
+	 display: block !important;
+}
+ @media (min-width: 992px) {
+	 .all-his .d-lg-block {
+		 display: block !important;
+	}
+}
+ .all-his .float-right {
+	 float: right !important;
+}
+ .all-his a {
+	 -webkit-text-decoration-skip: objects;
+	 background-color: transparent;
+	 color: inherit;
+	 text-decoration: none;
+}
+ .all-his a:hover {
+	 color: #10b18e;
+	 outline-width: 0;
+	 text-decoration: none;
+}
+ .all-his h4 {
+	 font-family: OpenSans, sans-serif;
+	 margin: 0;
+}
+ .all-his h4 {
+	 font-size: 18px;
+	 font-size: 1.125rem;
+	 line-height: 26px;
+	 line-height: 1.625rem;
+}
+ .all-his h4 {
+	 color: #333;
+	 font-weight: 700;
+	 margin-bottom: 0.2em;
+}
+ .all-his .none {
+	 display: none;
+}
+ @media only screen and (min-width: 1000px) {
+	 .all-his .none-l {
+		 display: none;
+	}
+	 .all-his .inline-l {
+		 display: inline;
+	}
+}
+ .all-his #mainpart {
+	 max-width: 1280px;
+	 padding-bottom: 30px;
+	 padding-top: 20px;
+	 padding-left: 60px;
+	 padding-right: 100x;
+	 width: 100%;
+}
+ @media only screen and (max-width: 999px) {
+	 .all-his #mainpart {
+		 padding-bottom: 50px;
+		 padding-left: 0;
+	}
+}
+ .all-his .user-private-tabs {
+	 list-style: none;
+	 text-decoration: none;
+}
+ .all-his .private-tabs header .user-name {
+	 overflow: hidden;
+	 text-overflow: ellipsis;
+	 white-space: nowrap;
+}
+ .all-his .private-tabs {
+	 background-color: rgba(255, 255, 255, .9);
+	 border-color: #e4e5e7 #dadbdd rgba(202, 204, 206, .8);
+	 border-radius: 4px;
+	 border-style: solid;
+	 border-width: 1px;
+	 overflow: hidden;
+	 top: -30px;
+}
+ .all-his .private-tabs header {
+	 background-color: #f4f5f6;
+	 border-bottom: 1px solid #dadbdd;
+	 padding: 10px;
+}
+ .all-his .index-background {
+	 background: rgba(199, 203, 209, 0) url(/images/megumi-bg.jpg?6247150065f9f59356a30f92526bdefc) no-repeat 50%;
+	 height: 180px;
+	 width: 100%;
+	 margin-top: -40px;
+	 padding-left: 100px;
+	 padding-right: 100px;
+}
+ .all-his .page-top-group {
+	 padding-top: 46px;
+}
+ .all-his .private-tabs {
+	 z-index: 1;
+	 border-color: #aaa;
+	 border-style: solid;
+	 border-width: 2px 2px 2px 2px;
+	 margin-bottom: 20px;
+	 position: relative;
+	 left: 13px;
+}
+
+.back-to-top {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	display: none;
+	cursor: pointer;
+  }
+
+.all-his .navigator-board-all {
+	 margin-top: 70px;
+}
+ .all-his .private-tabs header .section-name {
+	 margin-bottom: 0;
+	 font-size: 18px;
+	 font-weight: bold;
+	 color: #7a7a7a;
+}
+ .all-his .private-tabs header .user-name {
+	 color: rgba(0, 0, 0, .4);
+	 display: block;
+	 font-size: 20px;
+	 font-weight: bold;
+	 color: #888;
+}
+ .all-his .navigator-board-font {
+	 font-size: 18px;
+	 font-weight: bold;
+	 color: #585858;
+}
+ .all-his .user-private-tabs {
+	 margin: 0;
+	 padding: 0;
+}
+ .all-his .user-private-tabs li {
+	 border-left: 2px solid transparent;
+}
+ .all-his .user-private-tabs li i {
+	 margin-right: 10px;
+}
+ .all-his .user-private-tabs li:hover {
+	 background-color: #ecf2f9;
+}
+ .all-his .user-private-tabs li:hover a {
+	 color: inherit;
+	 opacity: 1;
+}
+ .all-his .user-private-tabs li a {
+	 border-bottom: 1px solid #d4dae2;
+	 display: block;
+	 opacity: 0.75;
+	 padding: 10px;
+	 transition: 0.25s;
+	 -webkit-transition: 0.25s;
+	 -moz-transition: 0.25s;
+	 -o-transition: 0.25s;
+}
+ .all-his .user-private-tabs li.current {
+	 border-left-color: #218efa;
+	 color: #218efa;
+}
+ .all-his .user-private-tabs li:last-child a {
+	 border-bottom: none;
+}
+ .all-his .user-private-tabs li.current a {
+	 font-weight: 700;
+	 opacity: 1;
+}
+ .all-his :-moz-focusring {
+	 outline: auto;
+}
+ .all-his :-moz-ui-invalid {
+	 box-shadow: none;
+}
+ .all-his ::-webkit-inner-spin-button, .all-his ::-webkit-outer-spin-button {
+	 height: auto;
+}
+ .all-his ::-webkit-search-decoration {
+	 -webkit-appearance: none;
+}
+ .all-his ::-webkit-file-upload-button {
+	 -webkit-appearance: button;
+	 font: inherit;
+}
+ .all-his h4 {
+	 margin: 0;
+}
+ .all-his ul {
+	 list-style: none;
+	 margin: 0;
+	 padding: 0;
+}
+
+/*!
+ * Font Awesome Free 5.8.2 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+ .fas {
+     -moz-osx-font-smoothing: grayscale;
+     -webkit-font-smoothing: antialiased;
+     display: inline-block;
+     font-style: normal;
+     font-variant: normal;
+     text-rendering: auto;
+     line-height: 1
+ }
+ 
+ .fa-angle-double-up:before {
+     content: "\f102"
+ }
+ 
+ .fa-chevron-down:before {
+     content: "\f078"
+ }
+ 
+ .fa-chevron-left:before {
+     content: "\f053"
+ }
+ 
+ @font-face {
+     font-family: "Font Awesome 5 Brands";
+     font-style: normal;
+     font-weight: normal;
+     font-display: auto;
+     src: url(../webfonts/fa-brands-400.eot);
+     src: url(../webfonts/fa-brands-400.eot?#iefix) format("embedded-opentype"), url(../webfonts/fa-brands-400.woff2) format("woff2"), url(../webfonts/fa-brands-400.woff) format("woff"), url(../webfonts/fa-brands-400.ttf) format("truetype"), url(../webfonts/fa-brands-400.svg#fontawesome) format("svg")
+ }
+ 
+ @font-face {
+     font-family: "Font Awesome 5 Free";
+     font-style: normal;
+     font-weight: 400;
+     font-display: auto;
+     src: url(../webfonts/fa-regular-400.eot);
+     src: url(../webfonts/fa-regular-400.eot?#iefix) format("embedded-opentype"), url(../webfonts/fa-regular-400.woff2) format("woff2"), url(../webfonts/fa-regular-400.woff) format("woff"), url(../webfonts/fa-regular-400.ttf) format("truetype"), url(../webfonts/fa-regular-400.svg#fontawesome) format("svg")
+ }
+ 
+ @font-face {
+     font-family: "Font Awesome 5 Free";
+     font-style: normal;
+     font-weight: 900;
+     font-display: auto;
+     src: url(../webfonts/fa-solid-900.eot);
+     src: url(../webfonts/fa-solid-900.eot?#iefix) format("embedded-opentype"), url(../webfonts/fa-solid-900.woff2) format("woff2"), url(../webfonts/fa-solid-900.woff) format("woff"), url(../webfonts/fa-solid-900.ttf) format("truetype"), url(../webfonts/fa-solid-900.svg#fontawesome) format("svg")
+ }
+ 
+ .fas {
+     font-family: "Font Awesome 5 Free"
+ }
+ 
+ .fas {
+     font-weight: 900
+ }
+
+
+ /*! tailwindcss v3.3.1 | MIT License | https://tailwindcss.com*/
+*,
+:after,
+:before {
+    border: 0 solid #e5e7eb;
+    box-sizing: border-box
+}
+
+:after,
+:before {
+    --tw-content: ""
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    line-height: 1.5;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4
+}
+
+body {
+    line-height: inherit;
+    margin: 0
+}
+
+abbr:where([title]) {
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted
+}
+
+h4 {
+    font-size: inherit;
+    font-weight: inherit
+}
+
+a {
+    color: inherit;
+    text-decoration: inherit
+}
+
+
+
+:disabled {
+    cursor: default
+}
+
+.all-his img {
+    display: block;
+}
+
+.all-his img {
+    height: auto;
+    max-width: 100%
+}
+
+::-webkit-datetime-edit-fields-wrapper {
+    padding: 0
+}
+
+::-webkit-date-and-time-value {
+    min-height: 1.5em
+}
+
+::-webkit-datetime-edit,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-meridiem-field,
+::-webkit-datetime-edit-millisecond-field,
+::-webkit-datetime-edit-minute-field,
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-second-field,
+::-webkit-datetime-edit-year-field {
+    padding-bottom: 0;
+    padding-top: 0
+}
+
+*,
+:after,
+:before {
+    --tw-border-spacing-x: 0;
+    --tw-border-spacing-y: 0;
+    --tw-translate-x: 0;
+    --tw-translate-y: 0;
+    --tw-rotate: 0;
+    --tw-skew-x: 0;
+    --tw-skew-y: 0;
+    --tw-scale-x: 1;
+    --tw-scale-y: 1;
+    --tw-pan-x: ;
+    --tw-pan-y: ;
+    --tw-pinch-zoom: ;
+    --tw-scroll-snap-strictness: proximity;
+    --tw-ordinal: ;
+    --tw-slashed-zero: ;
+    --tw-numeric-figure: ;
+    --tw-numeric-spacing: ;
+    --tw-numeric-fraction: ;
+    --tw-ring-inset: ;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: rgba(59, 130, 246, .5);
+    --tw-ring-offset-shadow: 0 0 #0000;
+    --tw-ring-shadow: 0 0 #0000;
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    --tw-blur: ;
+    --tw-brightness: ;
+    --tw-contrast: ;
+    --tw-grayscale: ;
+    --tw-hue-rotate: ;
+    --tw-invert: ;
+    --tw-saturate: ;
+    --tw-sepia: ;
+    --tw-drop-shadow: ;
+    --tw-backdrop-blur: ;
+    --tw-backdrop-brightness: ;
+    --tw-backdrop-contrast: ;
+    --tw-backdrop-grayscale: ;
+    --tw-backdrop-hue-rotate: ;
+    --tw-backdrop-invert: ;
+    --tw-backdrop-opacity: ;
+    --tw-backdrop-saturate: ;
+    --tw-backdrop-sepia:
+}
+
+::backdrop {
+    --tw-border-spacing-x: 0;
+    --tw-border-spacing-y: 0;
+    --tw-translate-x: 0;
+    --tw-translate-y: 0;
+    --tw-rotate: 0;
+    --tw-skew-x: 0;
+    --tw-skew-y: 0;
+    --tw-scale-x: 1;
+    --tw-scale-y: 1;
+    --tw-pan-x: ;
+    --tw-pan-y: ;
+    --tw-pinch-zoom: ;
+    --tw-scroll-snap-strictness: proximity;
+    --tw-ordinal: ;
+    --tw-slashed-zero: ;
+    --tw-numeric-figure: ;
+    --tw-numeric-spacing: ;
+    --tw-numeric-fraction: ;
+    --tw-ring-inset: ;
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: rgba(59, 130, 246, .5);
+    --tw-ring-offset-shadow: 0 0 #0000;
+    --tw-ring-shadow: 0 0 #0000;
+    --tw-shadow: 0 0 #0000;
+    --tw-shadow-colored: 0 0 #0000;
+    --tw-blur: ;
+    --tw-brightness: ;
+    --tw-contrast: ;
+    --tw-grayscale: ;
+    --tw-hue-rotate: ;
+    --tw-invert: ;
+    --tw-saturate: ;
+    --tw-sepia: ;
+    --tw-drop-shadow: ;
+    --tw-backdrop-blur: ;
+    --tw-backdrop-brightness: ;
+    --tw-backdrop-contrast: ;
+    --tw-backdrop-grayscale: ;
+    --tw-backdrop-hue-rotate: ;
+    --tw-backdrop-invert: ;
+    --tw-backdrop-opacity: ;
+    --tw-backdrop-saturate: ;
+    --tw-backdrop-sepia:
+}
+
+.border-table{
+    left: 16px;
+    margin-bottom: 80px;
+    position: relative;
+    width: 1000px;
+    top: -10px;
+}
+
+.text-right-header {
+    direction: rtl;
+    text-align: right; /* Align header text to the right */
+  }
+
+.image-cell img {
+    display: inline-block;
+  
+    /* Adjust the height of the image */
+    margin-right: 10px;
+    /* Adjust the spacing between image and text */
+}
+
+.text-container {
+    display: inline-block;
+    position: relative;
+    /* Absolute positioning for the text container */
+    
+    
+}
+.table thead th {
+    background-color: rgb(199, 199, 199);
+ /* Set the text color to black to override Bootstrap's default */
+  }
+
+.text1 {
+   /* Prevent text from wrapping to the next line */
+      overflow: hidden; /* Hide any overflowing content */
+      text-overflow: ellipsis;
+    font-size: 16px;
+    font-weight: 600;
+    /* Adjust the font size for Text1 */
+}
+
+.text2 {
+    font-size: 14px;
+    color: rgb(0, 180, 180);
+    /* Adjust the font size for Text2 */
+  }
+.border-table2{
+    
+/* To ensure the table takes the available width if content is smaller than 100px */
+
+  table-layout: fixed;
+  max-width: 760px;
+}
+
+
+.float-right {
+    float: right
+}
+
+.text-center {
+    text-align: center
+}
+
+
+#footer {
+    
+    background-color: #36a189;
+    background-color: #333;
+    color: #fff;
+    padding: 20px 20px;
+}
+#footer span {
+    color: #fff;
+    font-weight: 700;
+    margin-right: 20px;
+}
+#footer span a {
+    color: green;
+    text-decoration: none;
+}

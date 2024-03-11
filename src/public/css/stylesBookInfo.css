@@ -1,0 +1,89 @@
+#genreButton {
+  background-color: #eeeeee;
+  color: black;
+  border: none;
+}
+
+#genreButton:active,
+#genreButton:hover,
+.userLink:active,
+.userLink:hover {
+  color: #36a189;
+}
+
+.userLink {
+  text-decoration: none;
+  color: #000;
+}
+
+.top-group {
+  align-items: flex-end;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.outer {
+  border: 1px solid black;
+}
+
+.inner {
+  display: inline-block;
+  border: 1px solid red;
+}
+
+.icon-text {
+  color: black;
+}
+
+.function-item {
+  transition: opacity 0.3s; /* Smooth transition */
+}
+
+.function-item:hover {
+  opacity: 0.6;
+}
+
+.card:focus {
+  border: none !important;
+}
+
+.linkHref {
+  text-decoration: none;
+}
+
+.displayNone {
+  display: none;
+}
+
+.displayBlock {
+  display: block;
+}
+
+.star-rating {
+  /* border: solid 1px #ccc; */
+  font-size: 1.5em;
+  height: 1.5em;
+  /* padding: 0 0.2em; */
+  text-align: center;
+  width: 5em;
+  /* position: absolute; */
+}
+
+.star-rating input {
+  display: none;
+}
+
+.star-rating label {
+  color: #ccc;
+  cursor: pointer;
+  float: right;
+  margin: 0 0.08em;
+}
+
+.star-rating :checked ~ label {
+  color: #f90;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #fc0;
+}
