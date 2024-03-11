@@ -1,0 +1,77 @@
+<button data-bs-toggle="modal" data-bs-target="#readingModal"></button>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="readingModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="readingModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Tuỳ chỉnh</h1>
+      </div>
+      <div class="modal-body">
+        
+        <div class="row">
+          <div class="col-md-8 offset-md-2">
+            <div class="mb-3">
+              <label for="font-select" class="form-label">Font chữ</label>
+              <select class="form-select" id="font-select">
+                <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                <option value="Arial, sans-serif">Arial</option>
+                <option value="'Lora', serif">Lora</option>
+                <option value="'Merriweather', serif">Merriweather</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="background-color-select" class="form-label">Màu nền</label>
+              <select class="form-select" id="background-color-select">
+                <option value="#eae4d3" selected>Beige</option>
+                <option value="white">White</option>
+                <option value="black">Black</option>
+                <option value="#333333">Gray</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="font-size-range" class="form-label">Kích thước chữ</label>
+              <input type="range" class="form-range" id="font-size-range" min="10" max="50" step="1">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const fontSelect = document.getElementById('font-select');
+  const backgroundColorSelect = document.getElementById('background-color-select');
+  const fontSizeRange = document.getElementById('font-size-range');
+  const chapterContent = document.getElementById('chapter-content');
+
+  // console.log(fontSelect)
+  fontSelect.addEventListener('change', () => {
+    chapterContent.style.fontFamily = fontSelect.value;
+  });
+
+  backgroundColorSelect.addEventListener('change', () => {
+    const selectedColor = backgroundColorSelect.value;
+    document.body.style.backgroundColor = selectedColor;
+
+    // Apply white text color for black and gray themes
+    if (selectedColor === 'black' || selectedColor === '#333333') {
+      document.body.style.color = 'white';
+    } else {
+      document.body.style.color = ''; // Reset text color to default
+    }
+  });
+
+
+  fontSizeRange.addEventListener('input', () => {
+    chapterContent.style.fontSize = fontSizeRange.value + 'px';
+  });
+</script>

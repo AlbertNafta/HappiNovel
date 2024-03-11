@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title><%=curChap.chapName%></title>
+    <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+    <base href="http://localhost:3000/">
+    <%- include("./partials/head") -%>
+    <link rel="stylesheet" href="./css/reading.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="icon-bar float-end">
+            <a id="previousChapter1" href="/book/<%=curChap.bookID%>/<%=prevChap._id%>"><i class="fas fa-backward"></i></a> 
+            <a href="/book/<%=curChap.bookID%>"><i class="fa fa-home"></i></a> 
+            <a href="" id="modalLauncher"><i class="fas fa-font"></i></a> 
+            <a id="nextChapter1" href="/book/<%=curChap.bookID%>/<%=nextChap._id%>"><i class="fas fa-forward"></i></a>
+        </div>
+        <div class="row" style="margin-left: 100px; margin-right: 100px;">
+            <div class="title-top row" style="padding-top: 20px; padding-bottom: 20px">
+                <h2 class="title-item fw-bold" align="center">Volume: <%=curVol.volName%></h2>
+                <h4 class="title-item fw-bold" align="center">Chương: <%=curChap.chapName%></h4>
+                <%const chapDate = new Date(curChap.publishDate)%>
+                <%const curDate = new Date()%>
+                <%const timeDif = curDate - chapDate%>
+                <%const minutesAgo = Math.floor(timeDif / (60 * 1000));%>
+                <%const hoursAgo = Math.floor(timeDif / (60 * 60 * 1000));%>
+                <%const daysAgo = Math.floor(timeDif / (24 * 60 * 60 * 1000));%>
+                <% let timeAgo = ''%>
+                <% if (daysAgo > 0) {%>
+                    <%timeAgo = `${daysAgo} ngày trước`%>
+                <% } else if (hoursAgo > 0) {%>
+                    <% timeAgo = `${hoursAgo} tiếng trước`%>
+                <% } else if (minutesAgo > 0) {%>
+                    <% timeAgo = `${minutesAgo} phút trước`%>
+                <% } else {%>
+                    <% timeAgo = 'vừa xong'%>
+                <% }%>
+                <% const formattedDateTime = `${timeAgo}`%>
+                <h6 class="title-item fw-bold" align="center"> Độ dài: <%=wordCount%> từ - Cập nhật: <%=formattedDateTime%></h6>
+            </div>
+    
+            <div id="chapter-content" class="row justify-content-center" style="font-family: 'Times New Roman', Times, serif; font-size: 30px; line-height: 40px; padding-left: 0px; padding-right: 0px;">
+                <%-curChap.contentfile%>
+            </div>
+
+            <section class="rd-basic_icon row">
+                <a id="previousChapter2" href="/book/<%=curChap.bookID%>/<%=prevChap._id%>" class="col text-center"><i class="fas fa-backward"></i></a>
+                <a href="/book/<%=curChap.bookID%>" class="col text-center"><i class="fas fa-home"></i></a>
+                <a id="nextChapter2" href="/book/<%=curChap.bookID%>/<%=nextChap._id%>" class="col text-center "><i class="fas fa-forward"></i></a>
+            </section>
+
+        </div>
+
+
+        </div>
+        <%- include("./partials/modalReading") -%>
+    </div>
+    <script>
+        if ('<%=isPrevChap%>' == 'false') {
+            document.querySelector('#previousChapter1').classList.add('disable')
+            document.querySelector('#previousChapter2').classList.add('disable')
+        }
+        if ('<%=isNextChap%>' == 'false') {
+            document.querySelector('#nextChapter1').classList.add('disable')
+            document.querySelector('#nextChapter2').classList.add('disable')
+        }
+
+        document.getElementById('modalLauncher').addEventListener('click', function(e) {
+            e.preventDefault()
+            var scrollPosition = window.scrollY;
+            var button = document.querySelector('[data-bs-toggle="modal"][data-bs-target="#readingModal"]');
+            // Use Bootstrap's modal API to show the modal
+            var modalInstance = new bootstrap.Modal(button.dataset.bsTarget);
+
+            // Listen for the modal's hidden event
+            modalInstance._element.addEventListener('hidden.bs.modal', function() {
+            // Restore the scroll position after the modal is closed
+            window.scrollTo(0, scrollPosition);
+            });
+
+            modalInstance.show();
+        });
+
+    </script>
+</body>
+</html>

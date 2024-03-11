@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <base href="http://localhost:3000/">
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+      <meta name="description" content="Đọc HappiNovel, trang web tốt nhất HCMUS" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+      <title><%=Anotheruser.profileName%></title>
+      <style data-tag="reset-style-sheet">
+      </style>
+
+      <style>
+            /* Custom CSS to remove the outline when content is editable */
+            [contenteditable="true"] {
+                  outline: none;
+            }
+      </style>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&amp;display=swap"
+            data-tag="font" />
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+            data-tag="font" />
+      <link rel="stylesheet" href="./css/styleProfile.css">
+      <link rel="stylesheet" href="../public/css/styleProfile.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+      <!-- Open Sans Font -->
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+      <!-- FontAweSome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <!-- jquery -->
+      <script src="https://code.jquery.com/jquery-3.7.0.js"
+            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+      <!-- Bootstrap -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+      <!-- Styles.css -->
+      <link rel="stylesheet" href="css/stylesUpload.css">
+      <script src="/utils/dateHelpers.js"></script>
+      <script src="/js/statusB.js"></script>
+
+      <!-- Tiny ediotr -->
+      <%- include("./partials/head") -%>
+
+
+            <link rel="stylesheet" href="./css/ContextMenu.css" />
+            <script
+                  src="https://cdn.tiny.cloud/1/czhzadznx3qb12g2i4971xbviqsshfv65cbyuvs95fsi5021/tinymce/6/tinymce.min.js"
+                  referrerpolicy="origin"></script>
+            <script
+                  src="https://cdn.tiny.cloud/1/czhzadznx3qb12g2i4971xbviqsshfv65cbyuvs95fsi5021/tinymce/6/tinymce.min.js"
+                  referrerpolicy="origin"></script>
+</head>
+
+<body>
+      <div style="z-index: 0;">
+            <%- include("./partials/navigation") -%>
+      </div>
+
+
+      <button class="btn btn-dark back-to-top" onclick="scrollToTop()">
+            <i class="fas fa-angle-double-up"></i>
+      </button>
+
+      <div class="allll">
+
+            <div class="all-profile main-contain">
+                  <div>
+
+                  </div>
+                  <main id="mainpart" class="profile-page  ">
+                        <div class="profile-feature-wrapper">
+                              <!-- Cover image -->
+                              <div class="containerP">
+                                    <div class="profile-feature">
+                                          <div class="'profile-cover">
+                                                <div class="fourone-ratio">
+                                                      <!-- Ảnh bìa -->
+                                                      <div class="content img-in-ratio">
+                                                            <div class="content img-in-ratio">
+
+                                                                  <img src="<%= `https://happinovel2021.blob.core.windows.net/profilecover/${Anotheruser.coverURL}` %>"
+                                                                        id="coverImage">
+                                                              
+                                                                        <!-- Default cover picture if the user doesn't have one -->
+
+
+                                                            </div>
+
+                                                      </div>
+                                                      <%if(trueUser){%>
+                                                      <% if(Anotheruser.userID==trueUser.userID){%>
+                                                            <button id="uploadButton"
+                                                                  class="buttonn to-contact button-daden button-anh-bia">
+                                                                  <label for="coverImageInput" class="custom-button">
+                                                                        <i class="fas fa-camera"></i>
+                                                                        <input type="file" class="form-control"
+                                                                              id="coverImageInput" accept="image/*"
+                                                                              style="display: none;">
+                                                                        <span>Chỉnh sửa ảnh bìa</span>
+                                                                  </label>
+                                                            </button>
+                                                            <%}%>
+                                                            <%}%>
+
+                                                </div>
+
+                                          </div>
+                                          <div class="profile-nav">
+                                                <div class="profile-ava-wrapper">
+                                                      <div class="profile-ava">
+
+                                                            <!-- Ảnh đại diện -->
+                                                            <!-- Cần cắt hình ảnh thành hình vuông -->
+
+
+
+                                                            <img src="<%= `https://happinovel2021.blob.core.windows.net/avatar/${Anotheruser.avatarURL}` %>"
+                                                                  id="avaImage">
+
+                                                      </div>
+                                                      <%if(trueUser){%>
+                                                      <% if(Anotheruser.userID==trueUser.userID){%>
+                                                            <button href="" id="uploadButtonAva"
+                                                                  class="buttonn to-contact button-nigga button-anh-dai-dien ">
+                                                                  <label for="imageInput" class="custom-button"><i
+                                                                              class="fas fa-camera"></i>
+                                                                        <input type="file" class="form-control"
+                                                                              id="avaImageInput" accept="image/*"
+                                                                              style="display: none;"> </label>
+                                                            </button>
+                                                            <%}%><%}%>
+                                                </div>
+
+                                                <div class="profile-intro">
+                                                      <h3 class="profile-intro_name text-lg font-bold-ava">
+
+                                                            <%= Anotheruser.profileName%>
+                                                      </h3>
+                                                      <!-- badge -->
+
+                                                      <div class="profile-function at-desktop none block-m  ">
+                                                            <%if(trueUser){%>
+                                                            <% if(Anotheruser.userID==trueUser.userID){%>
+                                                                  <button href=""
+                                                                        class="buttonn to-contact button-green big-link move-up-button"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#editModal">
+                                                                        Cài đặt mật khẩu</button>
+                                                                  <%}%><%}%>
+                                                                        <div class="modal fade" id="editModal"
+                                                                              tabindex="-1"
+                                                                              aria-labelledby="editModalLabel"
+                                                                              aria-hidden="true">
+                                                                              <div class="modal-dialog">
+                                                                                    <div class="modal-content">
+                                                                                          <div class="modal-header">
+                                                                                                <h5 class="modal-title"
+                                                                                                      style="font-weight: bold; font-size: 24px;"
+                                                                                                      id="editModalLabel">
+                                                                                                      Đổi mật khẩu ???</h5>
+                                                                                                <button type="button"
+                                                                                                      class="btn-close"
+                                                                                                      data-bs-dismiss="modal"
+                                                                                                      aria-label="Close"></button>
+                                                                                          </div>
+                                                                                          <div class="modal-body">
+                                                                                                <!-- Input fields for the four rows -->                                                                                          
+                                                                                                <div class="mb-3">
+                                                                                                      <label for="oldPasswordInput"
+                                                                                                            class="form-label"
+                                                                                                            style="font-size: 20px;color:black">Mật khẩu cũ</label>
+                                                                                                      <input type="password"
+                                                                                                            class="form-control"
+                                                                                                            id="oldPasswordInput"
+                                                                                                            style="margin-bottom: 20px;font-size: 20px; margin-top: 20px; height: 50px;color:black">
+
+                                                                                                </div>                                                                                          
+                                                                                                <div class="mb-3">
+                                                                                                      <label for="confirmPasswordInput"
+                                                                                                            class="form-label"
+                                                                                                            style="font-size: 20px;color:black">Mật khẩu mới</label>
+                                                                                                      <input type="password"
+                                                                                                            class="form-control"
+                                                                                                            id="confirmPasswordInput"
+                                                                                                            style="margin-bottom: 20px;font-size: 20px; margin-top: 20px; height: 50px;color:black">
+
+                                                                                                </div>
+                                                                                                <div class="passwordError" style="color: red;"></div>
+                                                                                                <div class="passwordNError" style="color: rgb(0, 255, 76);"></div>
+                                                                                          </div>
+                                                                                          <div class="modal-footer">
+                                                                                                <!-- Save changes button -->
+                                                                                                <button type="button" id="getValueButton"
+                                                                                                      class="btn btn-primary ">Lưu lại</button>
+                                                                                                <button type="button"
+                                                                                                      class="btn btn-secondary"
+                                                                                                      data-bs-dismiss="modal">Hủy</button>
+                                                                                          </div>
+                                                                                    </div>
+                                                                              </div>
+                                                                        </div>
+                                                      </div>
+                                                      <!-- <button href="#" onclick="show('popup')">Button</button> -->
+                                                      <!-- This is what will be included inside the popup -->
+                                                      <!-- <div class="popup" id="popup">
+                    <p>This is a popup!</p>
+                    <p>Overlay uses <b>:before</b> and <b>:after</b> pseudo-classes.</p>
+                    <p>Website will still remain visible behind this popup.</p>
+                    <a href="#" onclick="hide('popup')">Close</a>
+                  </div> -->
+                                                </div>
+                                          </div>
+                                    </div>
+                              </div>
+                              <div class="container">
+                                    <div class="row">
+                                          <div class="col-12 col-lg-3">
+                                                <section class="basic-section clear">
+                                                      <ul class="statistic-top row">
+                                                            <li class="col-6">
+                                                                  <div class="statistic-value">
+                                                                        <%= chaptersCount %>
+                                                                  </div>
+                                                                  <div class="statistic-name">Chương đã đăng</div>
+                                                            </li>
+                                                            <li class="col-6">
+                                                                  <div class="statistic-value">
+                                                                        <%=Makedbook.length%>
+                                                                  </div>
+                                                                  <div class="statistic-name">Đang theo dõi</div>
+                                                            </li>
+                                                            <li class="col-12 mt-2">
+                                                                  <div class="statistic-value">
+                                                                        <%=NumComment.length%>
+                                                                  </div>
+                                                                  <div class="statistic-name">Bình luận</div>
+                                                            </li>
+                                                      </ul>
+                                                      <main class="sect-body">
+                                                            <div class="p-s_i-bio font-semibold " >
+                                                                  <p > 
+                                                                        <div id="frameContent">
+                                                                        <%=Anotheruser.bio%>
+                                                                        </div> 
+                                                                  </p>
+                                                                  <!-- Button to toggle edit mode -->
+                                                                  <%if(trueUser){%>
+                                                                  <% if(Anotheruser.userID==trueUser.userID){%>
+                                                                        <button id="editButton" href=""
+                                                                              class="buttonn to-contact button-blu button-tieu-su "
+                                                                              onclick="show('popup')">
+                                                                              Chỉnh tiểu sử</button>
+                                                                        <%}%>
+                                                                        <%}%>
+
+                                                            </div>
+
+                                                            <div class="profile-info-item">
+                                                                  <span class="info-name"><i
+                                                                              class="icon-more-contrast fas fa-calendar "></i>
+                                                                        Ngày
+                                                                        sinh:
+                                                                  </span><span contenteditable="false"
+                                                                        class="info-value  editable-frame ">
+                                                                        <%=formatDate( Anotheruser.dob)%>
+                                                                  </span>
+                                                            </div>
+                                                            <div class="profile-info-item">
+                                                                  <span class="info-name"><i
+                                                                              class="icon-more-contrast fas fa-pencil-alt"></i>
+                                                                        Nghề
+                                                                        nghiệp:
+                                                                  </span><span contenteditable="false"
+                                                                        class="info-value  editable-frame">
+                                                                        <%= Anotheruser.jobs%>
+                                                                  </span>
+                                                            </div>
+                                                            <div class="profile-info-item">
+                                                                  <span class="info-name"><i
+                                                                              class="icon-more-contrast fas fa-star"></i>
+                                                                        Sở thích:
+                                                                  </span><span contenteditable="false"
+                                                                        class="info-value  editable-frame">
+                                                                        <%= Anotheruser.favorites%>
+                                                                  </span>
+                                                            </div>
+                                                            <!-- Chỗ này tạo khoảng trống giữa content và cái đáy của frame, ở đó ta nhét một nút vào -->
+                                                            <div
+                                                                  class="profile-info-item place-for-button-chinh-thong-tin">
+                                                                  <span class="info-name"><i
+                                                                              class="icon-more-contrast fas fa-calendar"></i>
+                                                                        Tham
+                                                                        gia:
+                                                                  </span>
+                                                                  <span class="info-value">
+                                                                        <%= formatDate( Anotheruser.regdate)%>
+                                                                  </span>
+                                                            </div>
+                                                            
+                                                      </main>
+                                                </section>
+                                          </div>
+                                          <!-- Show truyện -->
+
+                                          <div class="col-12 col-md-12 col-lg-9 col-xl-9">
+                                                <section class="profile-showcase">
+                                                      <header>
+                                                            <span class="number">
+                                                                  <%= matchedBooks.length %>
+                                                            </span><span class="showcase-title">Truyện đã
+                                                                  đăng</span>
+                                                      </header>
+
+
+                                                      <div class="row">
+
+                                                            <!-- Truyện 1 bắt đầu từ đây -->
+
+                                                            <% matchedBooks.forEach((book,index)=> { %>
+
+                                                                  <% const
+                                                                        azureBlobBaseUrl='https://happinovel2021.blob.core.windows.net/bookcover'
+                                                                        ; %>
+                                                                        <div class="col-12 col-md-6">
+                                                                              <div class="showcase-item">
+                                                                                    <div class="row">
+                                                                                          <div
+                                                                                                class="series-cover col-4">
+                                                                                                <div class="a6-ratio">
+                                                                                                      <!-- Nếu là hỉnh ảnh qua link thì là: url(&#39; Đương link &#39;) -->
+                                                                                                      <!-- bìa sách -->
+                                                                                                      <% const
+                                                                                                            fullImageUrl=`${azureBlobBaseUrl}/${book.coverImg}`;
+                                                                                                            %>
+
+                                                                                                            <div class="content img-in-ratio"
+                                                                                                                  style="background-image: url('<%= fullImageUrl %>')">
+                                                                                                                  <a
+                                                                                                                        href="/book/<%= book.bookID %>"></a>
+
+                                                                                                            </div>
+                                                                                                </div>
+                                                                                          </div>
+                                                                                          <div class="col-8">
+                                                                                                <!-- phần này về thông tin cơ bản -->
+                                                                                                <div
+                                                                                                      class="series-info">
+                                                                                                      <div
+                                                                                                            class="series-type-wrapper">
+                                                                                                            <%if(formattedGenreNames[index]){
+                                                                                                                  %>
+                                                                                                                  <small
+                                                                                                                        class="series-type type-orinovel large-button-type-novel">
+                                                                                                                        <%= formattedGenreNames[index]
+                                                                                                                              %>
+                                                                                                                  </small>
+                                                                                                                  <%}%>
+                                                                                                                        <%if(!formattedGenreNames[index]){
+                                                                                                                              %>
+                                                                                                                              <small
+                                                                                                                                    class="series-type type-orinovel large-button-type-novel">Truyện
+                                                                                                                                    sáng
+                                                                                                                                    tác</small>
+                                                                                                                              <%}%>
+                                                                                                      </div>
+                                                                                                      <h5
+                                                                                                            class="series-name text-base font-bold">
+                                                                                                            <!-- Ấn vào link bê dưới là sẽ dẫn đến trang sách -->
+                                                                                                            <!-- Vá lỗi thủ công :))))) -->
+                                                                                                            <a class="no-underline"
+                                                                                                                  href="/book/<%= book.bookID %>">
+                                                                                                                  <%= book.title
+                                                                                                                        %>
+                                                                                                                        ㅤㅤㅤㅤㅤㅤㅤㅤ
+                                                                                                            </a>
+                                                                                                      </h5>
+                                                                                                </div>
+                                                                                                <!-- Thông tin về tiến độ -->
+                                                                                                <div
+                                                                                                      class="series-status">
+                                                                                                      <div
+                                                                                                            class="status-item">
+                                                                                                            <span
+                                                                                                                  class="status-name">Tình
+                                                                                                                  trạng:</span>
+                                                                                                            <span
+                                                                                                                  class="status-value">
+                                                                                                                  <%= formatStatus(book.status)
+                                                                                                                        %>
+                                                                                                            </span>
+                                                                                                      </div>
+                                                                                                      <div
+                                                                                                            class="status-item">
+                                                                                                            <span
+                                                                                                                  class="status-name">Ngày
+                                                                                                                  đăng:
+                                                                                                            </span>
+                                                                                                            <span
+                                                                                                                  class="status-value"><time
+                                                                                                                        class="timeago"
+                                                                                                                        datetime="2023-07-05T12:25:01+07:00">
+                                                                                                                        <%=formatDate(
+                                                                                                                              book.publishDate)%>
+                                                                                                                  </time>
+                                                                                                            </span>
+                                                                                                      </div>
+                                                                                                </div>
+                                                                                          </div>
+                                                                                    </div>
+                                                                              </div>
+                                                                        </div>
+
+                                                                        <% }) %>
+                                                                              <div class="col-12 col-md-6">
+                                                                                    <div class="showcase-item"
+                                                                                          style="border: none;background-color:rgba(233, 232, 232, 0) ">
+                                                                                          <div class="row">
+                                                                                                <div
+                                                                                                      class="series-cover col-4">
+                                                                                                      <div class="a6-ratio"
+                                                                                                            style="border: none;">
+                                                                                                            <!-- Nếu là hỉnh ảnh qua link thì là: url(&#39; Đương link &#39;) -->
+                                                                                                            <!-- bìa sách -->
+                                                                                                            <div class="content img-in-ratio"
+                                                                                                                  style="background-image: url();">
+                                                                                                            </div>
+                                                                                                      </div>
+                                                                                                </div>
+                                                                                                <div class="col-8">
+                                                                                                      <!-- phần này về thông tin cơ bản -->
+                                                                                                      <div
+                                                                                                            class="series-info">
+                                                                                                            <div
+                                                                                                                  class="series-type-wrapper">
+
+                                                                                                            </div>
+                                                                                                            <h5 class="series-name text-base font-bold"
+                                                                                                                  style="pointer-events: none;">
+                                                                                                                  <!-- Ấn vào link bê dưới là sẽ dẫn đến trang sách -->
+                                                                                                                  <!-- Vá lỗi thủ công :))))) -->
+                                                                                                                  <a class="no-underline"
+                                                                                                                        href="">ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤ</a>
+                                                                                                            </h5>
+                                                                                                      </div>
+                                                                                                      <!-- Thông tin về tiến độ -->
+                                                                                                      <div
+                                                                                                            class="series-status">
+                                                                                                            <div
+                                                                                                                  class="status-item">
+
+                                                                                                            </div>
+                                                                                                            <div
+                                                                                                                  class="status-item">
+
+                                                                                                            </div>
+                                                                                                      </div>
+                                                                                                </div>
+                                                                                          </div>
+                                                                                    </div>
+                                                                                    <!-- Truyện 2 -->
+                                                                              </div>
+
+
+
+
+                                                </section>
+                                          </div>
+                  </main>
+            </div>
+      </div>
+      <footer class="mt-3" id="footer">
+            <div class="container text-center">
+                  <div class="row align-items-center">
+                        <div class="col-md-6">
+                              <span>© 2023 - HappiNovel</span>
+                        </div>
+                        <div class="col-md-6">
+                              <span>Liên hệ: <a href="">contact@slavesteam.vn</a></span>
+                        </div>
+                  </div>
+            </div>
+      </footer>
+
+
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+      <script>
+            async function handleImageUpload(event) {
+                  const file = event.target.files[0];
+                  const reader = new FileReader();
+
+                  reader.onload = async function () {
+                        const coverImage = document.getElementById("coverImage");
+                        coverImage.src = reader.result;
+
+                        try {
+                              const formData = new FormData();
+                              formData.append('coverImage', file);
+                 
+                              const res = await fetch('/profile/update-cover', {
+                                    method: 'POST',
+                                    body: formData,
+                              });
+
+                              const data = await res.text();
+               
+                        
+                        } catch (err) {
+                              console.log(err);
+                        }
+                  };
+
+                  if (file) {
+                        reader.readAsDataURL(file);
+                  }
+            }
+
+            document.getElementById("uploadButton").addEventListener("click", function () {
+                  document.getElementById("coverImageInput").click();
+            });
+
+            document.getElementById("coverImageInput").addEventListener("change", handleImageUpload);
+      </script>
+      <script>
+            async function handleImageUpload2(event) {
+                  const file = event.target.files[0];
+                  const reader = new FileReader();
+
+                  reader.onload = async function () {
+                        const coverImage = document.getElementById("avaImage");
+                        coverImage.src = reader.result;
+
+                        try {
+                              const formData = new FormData();
+                              formData.append('avaImage', file);
+                              const res = await fetch('/profile/update-avatar', {
+                                    method: 'POST',
+                                    body: formData,
+                              });
+
+                              const data = await res.text();
+                              console.log(data);
+                        } catch (err) {
+                              console.log(err);
+                        }
+                  };
+
+                  if (file) {
+                        reader.readAsDataURL(file);
+                  }
+            }
+
+            document.getElementById("uploadButtonAva").addEventListener("click", function () {
+                  document.getElementById("avaImageInput").click();
+            });
+
+            // Add change event listener to the image input
+            document.getElementById("avaImageInput").addEventListener("change", handleImageUpload2);
+      </script>
+
+      <script>
+ 
+            function toggleEditableAll() {
+                  var frames = document.getElementsByClassName("editable-frame");
+                  var editButton2 = document.getElementById("editButton2");
+
+                  // Toggle the contenteditable attribute for each frame
+                  for (var i = 0; i < frames.length; i++) {
+                        if (frames[i].getAttribute("contenteditable") === "true") {
+                              frames[i].setAttribute("contenteditable", "false");
+                        } else {
+                              frames[i].setAttribute("contenteditable", "true");
+                        }
+                  }
+
+                  // Toggle the text of the button
+                  if (editButton2.textContent === "Lưu thông tin") {
+                        editButton2.textContent = "Sửa thông tin";
+                  } else {
+                        editButton2.textContent = "Lưu thông tin";
+                  }
+            }
+
+            // Add click event listener to the button
+            document.getElementById("editButton2").addEventListener("click", toggleEditableAll);
+
+
+      </script>
+      <script>
+            // Function to scroll to the top of the page smoothly
+            function scrollToTop() {
+                  window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                  });
+            }
+
+            // Show the back-to-top button when the user scrolls down
+            window.addEventListener('scroll', function () {
+                  var button = document.querySelector('.back-to-top');
+                  if (window.scrollY > 300) {
+                        button.style.display = 'block';
+                  } else {
+                        button.style.display = 'none';
+                  }
+            });
+      </script>
+      <script>
+            function formatDate(dateString) {
+                  const date = new Date(dateString);
+                  const day = date.getDate().toString().padStart(2, '0');
+                  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                  const year = date.getFullYear().toString();
+                  return `${day}/${month}/${year}`;
+            }
+      </script>
+
+      <script>
+            function getStatusText(status) {
+                  switch (status) {
+                        case 0:
+                              return "Tạm ngưng";
+                        case 1:
+                              return "Đang tiến hành";
+                        case 2:
+                              return "Đã hoàn thành";
+                        default:
+                              return "Trạng thái không xác định";
+                  }
+            }
+      </script>
+
+      <script>
+      // Get references to the input element and the button oldPasswordInput
+      const inputElement = document.getElementById('oldPasswordInput');
+      const inputElement2 = document.getElementById('confirmPasswordInput');
+      const getValueButton = document.getElementById('getValueButton');
+      const passwordError = document.querySelector('.passwordError');
+      const passwordNError = document.querySelector('.passwordNError');
+      // Add a click event listener to the button
+      getValueButton.addEventListener('click',async () => {
+        // Get the value from the input element
+        const inputValue = inputElement.value;
+        const inputValue2 = inputElement2.value;
+  
+        // Display the value in the console (you can do whatever you want with it)
+        console.log('Input Value:', inputValue);
+        passwordError.innerHTML = '';
+        passwordNError.innerHTML = '';
+        try {
+          const res = await fetch('/profile/password', {
+            method: 'post',
+            body: JSON.stringify({inputValue, inputValue2}),
+            headers: {'Content-Type': 'application/json'}
+          });
+         if (res.status === 200) {
+            passwordNError.innerHTML = 'Đã đổi mật khẩu !'
+        // Reload the page after a short delay
+        setTimeout(() => {
+          location.reload();
+        }, 1000); // Reload after 2 seconds
+      } else if (res.status === 400) {
+            
+        const errorMessage = await res.text();
+        passwordError.innerHTML = 'Mật khẩu cũ sai !'
+      }
+           
+          
+          
+          
+          
+        }
+        catch (err) {
+          console.log(err);
+        } 
+      });
+    </script>
+    <script>
+      async function toggleEditable() {
+                  var frameContent = document.getElementById("frameContent");
+                  const frameContenter = document.getElementById('frameContent').textContent;
+                  
+                  var editButton = document.getElementById("editButton");
+
+                  // Toggle the contenteditable attribute
+                  if (frameContent.getAttribute("contenteditable") === "true") {
+                        frameContent.setAttribute("contenteditable", "false");
+                        const cleanedContent = frameContenter.replace(/^\s+|\s+$/g, '');
+                        console.log(cleanedContent)
+                        editButton.textContent = "Chỉnh tiểu sử";
+                        try {
+                        const res = await fetch('/profile/bio', {
+                              method: 'post',
+                              body: JSON.stringify({cleanedContent}),
+                              headers: {'Content-Type': 'application/json'}
+                        });
+                        const data = await res.json()
+                        
+                        }
+                        catch (err) {
+                        console.log(err);
+                        } 
+                       
+                  } else {
+                        frameContent.setAttribute("contenteditable", "true");
+                        editButton.textContent = "Lưu tiểu sử";
+                  }
+            }
+
+            // Add click event listener to the button
+            document.getElementById("editButton").addEventListener("click", toggleEditable);
+    </script>
+
+</body>
+
+
+</html>

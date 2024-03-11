@@ -1,0 +1,29 @@
+</div>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop2Label" aria-hidden="true">
+  <div class="modal-dialog " style="width: 340px; height: 400px;">
+    <div class="modal-content " style="background-color: #ECECEC;" >
+      <div class="modal-body text-center"><br>
+      <i class="fa-solid fa-circle-check" style="color: #02a553;font-size: 60px;"></i><br><br>
+          <strong id="modalText2" style="display: block; font-size: 28px;color: #02a553;">
+            ...
+            </strong>
+          <br><br><br><br><br><br>
+          
+      </div>
+      <div >
+        <button id="modaldone1" type="button" class="btn btn-dark custom-btn-width text-light"
+                style="background-color: #02a553;border: none;
+                width: 100%; height: 100%;font-size: 25px;border-top-left-radius: 0px; border-top-right-radius: 0px;" data-bs-dismiss="modal"><strong>Trở lại</strong></button>
+    
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function attachModal2(content){
+        document.getElementById("modalText2").innerHTML = content;
+      $("#staticBackdrop2").modal('show');
+    }
+  </script>

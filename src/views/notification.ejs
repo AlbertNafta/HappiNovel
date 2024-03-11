@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+    <meta name="description" content="Đọc HappiNovel, trang web tốt nhất HCMUS" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông báo</title>
+    <style data-tag="reset-style-sheet">
+    </style>
+    <style>
+        /* Custom CSS to remove the outline when content is editable */
+    </style>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&amp;display=swap"
+        data-tag="font" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+        data-tag="font" />
+    <link rel="stylesheet" href="./css/styleNotification.css">
+    <style>
+        /* Custom CSS for the span containing the colon */
+        span {
+            display: inline;
+        }
+    </style>
+
+
+
+    <!-- Open Sans Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <!-- FontAweSome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"
+        integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <!-- Styles.css -->
+    <!-- Tiny ediotr -->
+    <script src="https://cdn.tiny.cloud/1/czhzadznx3qb12g2i4971xbviqsshfv65cbyuvs95fsi5021/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+    <script src="https://cdn.tiny.cloud/1/czhzadznx3qb12g2i4971xbviqsshfv65cbyuvs95fsi5021/tinymce/6/tinymce.min.js"
+        referrerpolicy="origin"></script>
+        <%- include("./partials/head") -%>
+        <link rel="stylesheet" href="/css/styleFix.css">
+</head>
+
+<body>
+    <div style="z-index: 0;">
+        <%- include("./partials/navigation") -%>
+    </div>
+    <button class="btn btn-dark back-to-top" onclick="scrollToTop()">
+        <i class="fas fa-angle-double-up"></i>
+    </button>
+    <div class="history">
+
+
+        <div class="all-his">
+            
+
+            <div class="page-top-group">
+                <a href="/">
+                    <!-- Này để chuyển qua trang chủ khi click vào bìa -->
+                    <div class="index-background d-none d-lg-block">
+                        <img src="./Image/BiaWeb.png">
+                    </div>
+
+                </a>
+            </div>
+
+
+            <main id="mainpart" class=" ">
+                <div class="container test">
+                    <div class="row d-block clearfix ">
+                        <!-- Navigator board -->
+                        <div class="col-12 col-lg-3 float-right navigator-board-all">
+                            <section class="private-tabs ">
+                                <header>
+                                    <h4 class="section-name">Tài khoản</h4>
+                                    <span class="user-name">Chủ nô</span>
+                                </header>
+                                <ul class="user-private-tabs ">
+                                    <!-- Chèn link ở khu vực href -->
+                                    <li class=" navigator-board-font "><a href="/bookmark"><span class="none inline-l "><i
+                                                    class="fas fa-chevron-left"></i></span><span
+                                                class="float-right none-l "><i
+                                                    class="fas fa-chevron-down "></i></span>Bookmark</a>
+                                    </li>
+                                    <!-- Chữ Current cho nơi nào đó đang ở -->
+                                    <li class=" navigator-board-font"><a href="/readinghistory"><span class="none inline-l"><i
+                                                    class="fas fa-chevron-left"></i></span><span
+                                                class="float-right none-l"><i
+                                                    class="fas fa-chevron-down"></i></span>Lịch
+                                            sử</a></li>
+                                    <li class="current navigator-board-font"><a href="/notification"><span class="none inline-l"><i
+                                                    class="fas fa-chevron-left"></i></span><span
+                                                class="float-right none-l"><i
+                                                    class="fas fa-chevron-down"></i></span>Thông
+                                            báo
+                                            cá nhân</a></li>
+                                    <!-- Nơi này của ADMIN -->
+                                    <% if(user.permission != 0){%>
+                                    <li class="navigator-board-font"><a href="/manageUser" style="color: #585858"><span
+                                                class="none inline-l"><i class="fas fa-chevron-left"></i></span><span
+                                                class="float-right none-l"><i
+                                                    class="fas fa-chevron-down"></i></span>Quản
+                                            lý
+                                            User</a></li>
+                                    <li class="navigator-board-font"><a href="/manageComment" style="color: #585858"><span
+                                                class="none inline-l"><i class="fas fa-chevron-left"></i></span><span
+                                                class="float-right none-l"><i
+                                                    class="fas fa-chevron-down"></i></span>Quản
+                                            lý
+                                            Comment</a></li>
+                                            <%}%>
+                                </ul>
+                            </section>
+                            <!-- End of Navigator board -->
+                        </div>
+
+                        <!-- Khu vực truyện yêu thích -->
+                        <div class="border-table">
+                            <table class="table table-hover border-table2 ">
+                                <!-- Header -->
+                                <thead>
+                                    <tr class="blu">
+                                        <th class="text-left">Thông báo</th>
+                                        <th class="text-right-header">Thông tin chi tiết</th>
+                                        <th class="small-column"></th>
+                                    </tr>
+                                </thead>
+                                <% function truncateTitle(title, maxTitleLength) { %>
+                                    <% if (title.length> maxTitleLength) { %>
+                                        <%= title.slice(0, maxTitleLength) + '...' %>
+                                            <% } else { %>
+                                                <%= title %>
+                                                    <% } %>
+                                                        <% } %>
+                                <tbody>
+                                    <!-- Dòng 1 -->
+                                    <!-- Thông báo có chương mới -->
+                                    <% for (const notify of notifyData) { %>
+                                    <tr class="thong-bao-chuong-moi "data-chap_id="<%=notify.IDnotify%>">
+                                        
+                                        <% const azureBlobBaseUrl = 'https://happinovel2021.blob.core.windows.net/bookcover'; %>
+                                        <% const fullImageUrl = `${azureBlobBaseUrl}/${notify.bookIMG}`; %>
+                                        <td class="image-cell">
+                                            <img src="<%=fullImageUrl%>" alt="Small Image " width="60" height="80">
+                                            <div class="text-container">
+                                                <div class="text1"><a href="/book/<%= notify.bookID %>" title="<%=notify.bookName%>"><%= truncateTitle(notify.bookName,
+                                                    30) %></a></div>
+                                                <div class="text2"><%=notify.genreName%></div>
+                                            </div>
+                                        </td>
+
+                                        <td class="text-right" style="direction: rtl; "><a
+                                                href="/book/<%= notify.bookID %>/<%= notify.chap_id %>"><%=notify.chapName%></a>
+                                            <p><%=notify.volName%></p>
+                                        </td>
+                                        <td class="small-column">
+                                            <div class="inline-imagess " style="z-index: -1;">
+                                               
+                                                <img src="./Image/pngegg (5).png" onclick="deleteRowAndImage(this)"
+                                                    class="moved-image" alt="Small Image " width="20" height="20">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% } %>     
+                                    <% for (const notify of notifyData2) { %>                               <!-- Dòng 2 -->                            
+                                    <tr class="thong-bao-sach-chap-thuan "data-chap_id="<%=notify.IDnotify%>">
+                                        <% const azureBlobBaseUrl = 'https://happinovel2021.blob.core.windows.net/bookcover'; %>
+                                        <% const fullImageUrl = `${azureBlobBaseUrl}/${notify.bookIMG}`; %>
+                                        <td class="image-cell">
+                                            <img src="<%=fullImageUrl%>" alt="Small Image " width="60" height="80">
+                                            <div class="text-container">
+                                                <div class="text1"><a href="/book/<%= notify.bookID %>" title="<%=notify.bookName%>"><%= truncateTitle(notify.bookName,
+                                                    30) %></a></div>
+                                                <div class="text2"><%=notify.genreName%></div>                                                
+                                            </div>
+
+                                        </td>
+
+                                        <td class="text-right" style="direction: rtl; ">
+                                            <div class="can-giua">
+                                                <a href="/book/<%= notify.bookID %>">Chúc mừng, sách của bạn đã
+                                                    được chấp thuận</a>
+                                            </div>
+                                        </td>
+                                        <td class="small-column">
+                                            <div class="inline-imagess " style="z-index: -1;">
+                                             
+
+                                                <img src="./Image/pngegg (5).png" onclick="deleteRowAndImage(this)"
+                                                    class="moved-image" alt="Small Image " width="20" height="20">
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <% } %> 
+                                    <% for (const notify of notifyData3) { %>  
+                                    <tr class="thong-bao-sach-tu-choi "data-chap_id="<%=notify.IDnotify%>">
+                                        <% const azureBlobBaseUrl = 'https://happinovel2021.blob.core.windows.net/bookcover/defaultBook.jpg'; %>
+                                        
+                                        <td class="image-cell">
+                                            <img src="<%=azureBlobBaseUrl%>" alt="Small Image " width="60"
+                                                height="80">
+                                            <div class="text-container">
+                                                <div class="text1"><a href="" title="<%=notify.bookName%>"><%= truncateTitle(notify.bookName,
+                                                    30) %></a></div>
+                                                <div class="text2"></div>
+                                                
+                                            </div>
+
+                                        </td>
+
+                                        <td class="text-right" style="direction: rtl; ">
+                                            <div class="can-giua">
+                                                <a href="">Vì vi phạm tiêu chuẩn cộng
+                                                    đồng, chúng tôi<br> từ chối cho đăng sách của bạn lên</a>
+                                            </div>
+                                        </td>
+                                        <td class="small-column">
+                                            <div class="inline-imagess " style="z-index: -1;">
+                                               
+                                                <img src="./Image/pngegg (5).png" onclick="deleteRowAndImage(this)"
+                                                    class="moved-image" alt="Small Image " width="20" height="20">
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <% } %> 
+                                    <% for (const notify of notifyData4) { %> 
+                                    <tr class="thong-bao-binh-luan-report "data-chap_id="<%=notify.IDnotify%>">
+
+                                        <td class="image-cell">
+                                            <img src="./Image/many-user.png" alt="Small Image " width="60" height="80">
+                                            <div class="text-container">
+                                                <div class="text1"><a href="/manageComment">Có một bình
+                                                        luận đã bị report !</a></div>
+
+                                            </div>
+
+                                        </td>
+
+                                        <td class="text-right" style="direction: rtl; ">
+                                            <div class="can-giua">
+                                                <a href="/manageComment"><%=notify.userName%> đã bình luận<br><%= truncateTitle(notify.commentData,
+                                                    28)%></a>
+                                            </div>
+                                        </td>
+                                        <td class="small-column">
+                                            <div class="inline-imagess " style="z-index: -1;">
+                                               
+
+                                                <img src="./Image/pngegg (5).png" onclick="deleteRowAndImage(this)"
+                                                    class="moved-image" alt="Small Image " width="20" height="20">
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <% } %> 
+                                    <% for (const notify of notifyData5) { %> 
+                                    <tr class="thong-bao-sach-muon-dang "data-chap_id="<%=notify.IDnotify%>">
+                                        <% const azureBlobBaseUrl = 'https://happinovel2021.blob.core.windows.net/bookcover'; %>
+                                        <% const fullImageUrl = `${azureBlobBaseUrl}/${notify.bookIMG}`; %>
+                                        <td class="image-cell">
+                                            <img src="<%=fullImageUrl%>" alt="Small Image " width="60" height="80">
+                                            <div class="text-container">
+                                                <div class="text1"><a href="/manage" title="<%=notify.bookName%>"><%= truncateTitle(notify.bookName,
+                                                    30) %></a></div>
+                                                <div class="text2"><%=notify.genreName%></div>
+                                               
+                                            </div>
+
+                                        </td>
+
+                                        <td class="text-right" style="direction: rtl; ">
+                                            <div class="can-giua">
+                                                <a href="/manage">Tác giả muốn đăng cuốn này
+                                                    lên</a>
+                                            </div>
+                                        </td>
+                                        <td class="small-column">
+                                            <div class="inline-imagess " style="z-index: -1;">
+                                               
+
+                                                <img src="./Image/pngegg (5).png" onclick="deleteRowAndImage(this)"
+                                                    class="moved-image" alt="Small Image " width="20" height="20">
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                    <% } %> 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+
+
+
+
+            </main>
+        </div>
+    </div>
+
+    <footer class="mt-3" id="footer">
+        <div class="container text-center">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <span>© 2023 - HappiNovel</span>
+                </div>
+                <div class="col-md-6">
+                    <span>Liên hệ: <a href="">contact@slavesteam.vn</a></span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Function to scroll to the top of the page smoothly
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        window.addEventListener('scroll', function () {
+            var button = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                button.style.display = 'block';
+            } else {
+                button.style.display = 'none';
+            }
+        });
+        // Get all elements with the 'clickable-image' class
+        var clickableImages = document.getElementsByClassName('clickable-image');
+
+        // Add click event listener to each image
+        for (var i = 0; i < clickableImages.length; i++) {
+            clickableImages[i].addEventListener('click', changeImage);
+        }
+        var isImage1 = true;
+        function changeImage(event) {
+            var clickedImage = event.target; // Get the clicked image element
+            // Check if the image is image1
+
+            if (isImage1) {
+                // Change to image2 when clicking on image1
+                clickedImage.src = './Image/021dc1fb9e-01.png';
+            } else {
+                // Change back to image1 when clicking on image2
+                clickedImage.src = './Image/—Pngtree—circle clipart gray circle_5553146.png';
+            }
+            isImage1 = !isImage1;
+        }
+    </script>
+    <script>
+        async function deleteRowAndImage(imageElement) {
+            // Get the parent div of the clicked image
+            var div = imageElement.parentNode;
+            // Get the parent row of the div
+            var col = div.parentNode;
+            // Get the parent tbody of the row
+            var row = col.parentNode;
+            var tbody = row.parentNode
+            const chap_id = row.getAttribute('data-chap_id');
+            
+            // Remove the row from the table
+            try {
+                        const res = await fetch(`/notification/delete`, {
+                              method: 'DELETE', // Use DELETE method here
+                              body: JSON.stringify({ chap_id }),
+                              headers: { 'Content-Type': 'application/json' }
+                        });
+                        const data = await res.json();
+                        console.log(data);
+                  } catch (err) {
+                        console.log(err);
+                  }
+            tbody.removeChild(row);
+        }
+    </script>
+    <script>
+        document.getElementById('bell-icon').addEventListener('click', function () {
+            var popup = document.getElementById('notification-popup');
+            popup.classList.toggle('show');
+        });
+    </script>
+
+</body>
+
+</html>

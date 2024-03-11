@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+  <title>Trang chủ - Cổng đọc truyện số 1 Việt Nam</title>
+  <%- include("./partials/head") -%>
+  <link rel="stylesheet" href="/css/stylesHome.css" type="text/css"/>
+</head>
+<body style = "height:auto;background-color:whitesmoke">
+    <%- include("./partials/navigation") -%>
+    <%- include("./partials/coverImg") -%>
+    <!-- Nổi bật -->
+    <div class = "container">
+        <div class = "row">
+            <div class="col-12">
+                <div class="container">
+                    <header class="title">
+                      <span class="container-view">
+                          <span class = "sts-bold">
+                              <i class="fas fa-trophy" style = "color: #f0bc00"></i> Nổi bật
+                          </span>
+                    </span>
+                    </header>
+                </div>
+                <div class="row">
+                  <div class="col-9">
+                      <div class="container" style="margin-bottom: 50px">
+                          <div id="carousel1" class="carousel slide" data-bs-ride="carousel">
+                              <!-- Indicators/dots -->
+                              <ol class="carousel-indicators" style="margin-bottom: 30px;">
+                                  <% for (let i = 0; i < 3; i++) { %>
+                                  <button type="button" data-bs-target="#carousel1" data-bs-slide-to="<%= i %>"
+                                      class="<%= i === 0 ? 'active' : '' %>" style="background-color: black"></button>
+                                  <% } %>
+                              </ol>
+                              <!-- The slideshow/carousel -->
+                              <div class="carousel-inner">
+                                  <% for (let i = 0; i < 3; i++) { %>
+                                  <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                                      <% for (let row = 0; row < 2; row++) { %>
+                                      <div class="row">
+                                          <% for (let j = (i * 2 + row) * 4; j < Math.min((i * 2 + row + 1) * 4, mostViewBooks.length); j++) { %>
+                                          <div class="col-3">
+                                              <!-- Display book information here -->
+                                              <div class="card" style="height: 250px; width: 200px;">
+                                                  <img class="card-img-top"
+                                                      src="<%= bookCoverURL[mostViewBooks[j].bookID] %>"
+                                                      alt="Book Cover">
+                                                  <div class="card-img-overlay">
+                                                      <div class="card-img-overlay d-flex align-items-end justify-content-center"
+                                                          style="bottom: 0; background: linear-gradient(180deg,transparent 0,rgba(0,0,0,.8) 150%,rgba(0,0,0,.8))">
+                                                          <div class="card-title"
+                                                              style="margin-bottom: -5px; text-align: center">
+                                                              <a href="/book/<%=mostViewBooks[j].bookID %>"
+                                                                  class="hover-effect"
+                                                                  style="text-decoration: none; font-weight: bolder; color: rgb(255, 255, 255)">
+                                                                  <span class="hover-effect"><%= mostViewBooks[j].title %></span>
+                                                              </a>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <% } %>
+                                      </div>
+                                      <% } %>
+                                  </div>
+                                  <% } %>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                    <div class="col-3">
+                        <div class="container">
+                          <header>
+                            <a href="/readinghistory" style="text-decoration: none;">
+                              <span class="sts-bold">Truyện</span>
+                              <span class="sts-empty">Vừa đọc</span>
+                            </a>
+                          </header>
+                          <main>
+                            <% if (readingHistory.length > 0) { %>
+                              <% for (let i = 0; i < readingHistory.length; i++) { %>
+                                <div class="row">
+                                  <div class="col-1" style="margin-top: 20px;">
+                                    <div class="card" style="height: 100px; width: 80px;">
+                                      <img class="card-img-top" style="height: 100px; width: 80px;" src="<%=bookCoverURL[readingHistory[i].book.bookID]%>" alt="Card image">
+                                      <div class="card-img-overlay">
+                                        <div class="card-img-overlay d-flex align-items-end">
+                                          <div class="card-title" style="margin-bottom: -5px; text-align: center">
+                                            <a href="/book/<%=readingHistory[i].book.bookID%>" style="text-decoration: none; color: white"></a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="col-4" style="margin-left: 65px; margin-top: 12px">
+                                    <a href="/book/<%=readingHistory[i].book.bookID%>" class="hover-effect" style="text-decoration: none;font-weight:bolder;font-size:10px; color:black">
+                                      <span class="hover-effect"><%= bookHashMap[readingHistory[i].book.bookID].title %></span>
+                                    </a>  
+                                  </div>                                
+                                </div>
+                              <% } %>
+                            <% } else { %>
+                            <% } %>
+                          </main>
+                        </div>
+                    </div>      
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sáng tác mới nhất -->
+    <div class = "container" style = "margin-top: 10px;">
+        <div class = "row">
+            <div class="col-12">
+                <div class="container">
+                    <header class="title">
+                        <span class="container-view">
+                            <a href = "#" style = "text-decoration: none">
+                                <span class = "sts-bold">Sáng tác</span>
+                                <span class = "sts-empty">Mới nhất</span>
+                            </a>
+                        </span>
+                    </header>
+                </div>
+                <div class ="row">
+                    <div class = "col-9">
+                        <div class = "container" style ="margin-bottom:10px">
+                            <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                                <!-- The slideshow/carousel -->
+                                <div class="carousel-inner">
+                                <div class="carousel-item active"></div>
+                                <div class="row">
+                                  <% for (let i = 0; i < 2; i++) { %>
+                                    <div class="row">
+                                        <% for (let j = i * 4; j < Math.min((i + 1) * 4, newestBooks.length); j++) { %>
+                                            <div class="col-3">
+                                                <!-- Display book information here -->
+                                                <div class="card" style="height: 250px; width: 200px;">
+                                                    <img class="card-img-top" style="height: 250px; width: 200px;" src="<%=bookCoverURL[newestBooks[j].bookID]%>" alt="Book Cover">
+                                                    <div class="card-img-overlay">
+                                                        <div class="card-img-overlay d-flex align-items-end justify-content-center" style="bottom: 0; background: linear-gradient(180deg,transparent 0,rgba(0,0,0,.8) 150%,rgba(0,0,0,.8))">
+                                                            <div class="card-title" style="margin-bottom: -5px; text-align: center">
+                                                                <a href="/book/<%=newestBooks[j].bookID%>" class="hover-effect" style="text-decoration: none; font-weight: bolder; color: rgb(255, 255, 255)">
+                                                                    <span class="hover-effect"><%= newestBooks[j].title %></span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                <% } %>
+                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class = "col-3">
+                        <div class = "container">
+                            <header>
+                                <a href = "#" style = "text-decoration: none;">
+                                    <span class = "sts-bold">Theo dõi</span>
+                                    <span class = "sts-empty">Nhiều</span>
+                                </a>
+                            </header>
+                            <main>
+                                <% if (mostFollowedBooks.length > 0) { %>
+                                  <% for (let i = 0; i < mostFollowedBooks.length; i++) { %>
+                                    <div class="row">
+                                      <div class="col-1" style="margin-top: 20px;">
+                                        <div class="card" style="height: 100px; width: 80px;">
+                                          <img class="card-img-top" src="<%=bookCoverURL[mostFollowedBooks[i].bookID]%>" alt="Card image">
+                                          <div class="card-img-overlay">
+                                            <div class="card-img-overlay d-flex align-items-end">
+                                              <div class="card-title" style="margin-bottom: -5px; text-align: center">
+                                                <a href="/book/<%=mostFollowedBooks[i].bookID%>" style="text-decoration: none; color: white"></a>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="col-4" style="margin-left: 65px; margin-top: 12px">
+                                        <a href="/book/<%=mostFollowedBooks[i].bookID%>" class="hover-effect" style="text-decoration: none;font-weight:bolder;font-size:10px; color:black">
+                                            <span class="hover-effect"><%= bookHashMap[mostFollowedBooks[i].bookID].title %></span>
+                                        </a>
+                                        <div class="row" style="font-size: 10px; margin-top: 5px;">
+                                          <span style="color: pink;font-weight:bolder"><%= totalFollows[i] %>
+                                            <span style="font-size: 10px; color: black;"> theo dõi</span>
+                                          </span>
+                                      </div>               
+                                      </div>                                
+                                    </div>
+                                  <% } %>
+                                <% } else { %>
+                                <% } %>
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Chương mới nhất -->
+    <div class = "container" style = "margin-top: 10px;">
+        <div class = "row">
+            <div class="col-12">
+                <div class="container">
+                    <header class="title">
+                        <span class="container-view">
+                            <a href = "#" style = "text-decoration: none">
+                                <span class = "sts-bold">Chương</span>
+                                <span class = "sts-empty">Mới nhất</span>
+                            </a>
+                        </span>
+                    </header>
+                </div>
+                <div class ="row">
+                    <div class = "col-9">
+                        <div class = "container" style ="margin-bottom:10px">
+                            <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                                <!-- The slideshow/carousel -->
+                                <div class="carousel-inner">
+                                    <% for (let i = 0; i < 4; i++) { %>
+                                      <div class="row" style="margin-bottom: 20px;">
+                                        <% for (let j = i * 4; j < Math.min((i + 1) * 4, newestChapter.length); j++) { %>
+                                          <div class="col-3">
+                                            <!-- Display book information here -->
+                                            <div class="card" style="height: 250px; width: 200px;">
+                                              <img class="card-img-top" src="<%=bookCoverURL[newestChapter[j].bookID] %>" style="height: 250px; width: 200px" alt="Book Cover">
+                                              <div class="card-img-overlay">
+                                                <div class="card-img-overlay d-flex align-items-end justify-content-center" style = " bottom: 0; background: linear-gradient(180deg,transparent 0,rgba(0,0,0,.8) 150%,rgba(0,0,0,.8))">
+                                                  <div class="card-title" style="margin-bottom: -5px; text-align: center">
+                                                    <a href="/book/<%=newestChapter[j].bookID %>" class="hover-effect" style="text-decoration: none; font-weight: bolder; color: rgb(255, 255, 255)">
+                                                      <span class="hover-effect"><%= bookHashMap[newestChapter[j].bookID].title %></span>
+                                                    </a>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        <% } %>
+                                        <% if (newestChapter.length % 4 !== 0 && i === 3) { %>
+                                          <% for (let k = 0; k < 4 - (newestChapter.length % 4); k++) { %>
+                                            <div class="col-3"></div>
+                                          <% } %>
+                                        <% } %>
+                                      </div>
+                                    <% } %>
+                                  </div>
+                                </div> 
+                            </div>
+                          </div>
+                          <div class = "col-3">
+                            <div class = "container">
+                                <header>
+                                    <a href = "#" style = "text-decoration: none;">
+                                        <span class = "sts-bold">Đánh giá</span>
+                                        <span class = "sts-empty">Cao</span>
+                                    </a>
+                                </header>
+                                <main>
+                                    <% if (mostRatingBooks.length > 0) { %>
+                                      <% for (let i = 0; i < mostRatingBooks.length; i++) { %>
+                                        <div class="row">
+                                          <div class="col-1" style="margin-top: 20px;">
+                                            <div class="card" style="height: 100px; width: 80px;">
+                                              <img class="card-img-top" src="<%=bookCoverURL[mostRatingBooks[i].bookID]%>" alt="Card image">
+                                              <div class="card-img-overlay">
+                                                <div class="card-img-overlay d-flex align-items-end">
+                                                  <div class="card-title" style="margin-bottom: -5px; text-align: center">
+                                                    <a href="/book/<%=mostRatingBooks[i].bookID%>" style="text-decoration: none; color: white"></a>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <div class="col-4" style="margin-left: 65px; margin-top: 12px">
+                                            <a href="/book/<%=mostRatingBooks[i].bookID%>" class="hover-effect" style="text-decoration: none;font-weight:bolder;font-size:10px; color:black">
+                                                <span class="hover-effect"><%= bookHashMap[mostRatingBooks[i].bookID].title %></span>
+                                            </a>
+                                            <div class="row" style="font-size: 10px; margin-top: 5px;">
+                                              <span style="color: pink;font-weight:bolder"><%= mostRatingBooks[i].averageScore %>
+                                                <i class="fa-sharp fa-solid fa-star" style="color: #ffd43b;"></i>
+                                              </span>
+                                          </div>
+                                                                              
+                                          </div>                                
+                                        </div>
+                                      <% } %>
+                                    <% } else { %>
+                                    <% } %>
+                                </main>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Truyện đã hoàn thành -->
+    <div class = "container" style = "margin-top: 10px;">
+        <div class = "row">
+            <div class="col-12">
+                <div class="container">
+                    <header class="title">
+                        <span class="container-view">
+                            <a href = "#" style = "text-decoration: none">
+                                <span class = "sts-bold">Truyện</span>
+                                <span class = "sts-empty">Đã hoàn thành</span>
+                            </a>
+                        </span>
+                    </header>
+                </div>
+                <div class="row">
+                  <div class="col-9">
+                    <div class="container" style="margin-bottom: 10px">
+                      <div id="carousel2" class="carousel slide" data-bs-ride="carousel">
+                        <!-- The slideshow/carousel -->
+                        <div class="carousel-inner">
+                          <% const numSlides = Math.ceil(finishedBooks.length / 4); %>
+                          <% if (numSlides === 0) { %>
+                            <!-- Show a message if there are no books available -->
+                            <div class="carousel-item active">
+                              <p>No books available.</p>
+                            </div>
+                          <% } else { %>
+                            <% for (let i = 0; i < numSlides; i++) { %>
+                              <% const startIndex = i * 4; %>
+                              <% const endIndex = Math.min(startIndex + 4, finishedBooks.length); %>
+                              <% const booksInSlide = finishedBooks.slice(startIndex, endIndex); %>
+                              <div class="carousel-item <%= i === 0 ? 'active' : '' %>">
+                                <div class="row">
+                                  <% for (let j = 0; j < booksInSlide.length; j++) { %>
+                                    <div class="col-3">
+                                      <!-- Display book information here -->
+                                      <div class="card" style="height: 250px; width: 200px;">
+                                        <img class="card-img-top" src="<%= bookCoverURL[booksInSlide[j].bookID] %>" alt="Book Cover">
+                                        <div class="card-img-overlay">
+                                          <div class="card-img-overlay d-flex align-items-end justify-content-center" style = " bottom: 0; background: linear-gradient(180deg,transparent 0,rgba(0,0,0,.8) 150%,rgba(0,0,0,.8))">
+                                            <div class="card-title" style="margin-bottom: -5px; text-align: center">
+                                              <a href="/book/<%=booksInSlide[j].bookID%>" class="hover-effect" style="text-decoration: none; font-weight: bolder; color: rgb(255, 255, 255)">
+                                                <span class="hover-effect"><%= booksInSlide[j].title %></span>
+                                              </a>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  <% } %>
+                                </div>
+                              </div>
+                            <% } %>
+                          <% } %>
+                        </div>
+                
+                        <!-- Indicators/dots -->
+                        <% if (numSlides > 1) { %>
+                          <div class="carousel-indicators">
+                            <ol>
+                              <% for (let i = 0; i < numSlides; i++) { %>
+                                <button type="button" data-bs-target="#carousel2" data-bs-slide-to="<%= i %>" class="<%= i === 0 ? 'active' : '' %>" style="background-color: black"></button>
+                              <% } %>
+                            </ol>
+                          </div>
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+   <!-- Footer -->
+   <div class = "row" style = "margin-top:70px"></div>
+   <%- include("./partials/footer") -%>  
+</body>
+</html>
+

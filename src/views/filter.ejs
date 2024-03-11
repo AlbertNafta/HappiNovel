@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+  <title>Tìm kiếm - Cổng đọc truyện số 1 Việt Nam</title>
+  <%- include("./partials/head") -%>
+  <link rel="stylesheet" href="/css/stylesHome.css" type="text/css"/>
+  <link rel="stylesheet" href="css/stylesNavigator.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/stylesSearchFilter.css" type="text/css"/>
+</head>
+<body style = "height:auto;background-color:whitesmoke">
+    <%- include("./partials/navigation") -%>
+    <%- include("./partials/coverImg") -%>
+    
+    <div class = "container">
+        <div class = "row" style = "margin-bottom: 20px;">
+            <div class = "col-2">
+                <div class = "container" style = "position: relative">
+                    <i class="fas fa-circle" style = "color: rgb(28, 59, 28)"></i>
+                    Tìm kiếm
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <form class="row g-3" action="/filter" method="get">
+            <div class="col-12" style="margin-top: 10px">
+                <div class="input-group">
+                    <input type="search" class="form-control rounded" placeholder="Có thể bỏ trống" aria-label="Search" aria-describedby="search-addon" name="filterSearch">
+                    <button type="submit" class="btn btn-outline-primary" style="color: white; background-color: green">Tìm kiếm</button>
+                </div>
+            </div>
+            <div class="col-12">
+                <a class="container text-end" href="javascript:void(0);" onclick="toggleOptions()" style="text-decoration: none; color: black">
+                    <i class="fas fa-filter" style="color: black; margin-right: 0px; margin-top: 30px;"></i>
+                    <span style="margin-right: 10px;">Tìm kiếm nâng cao</span>
+                </a>
+            </div>
+            <div class="col-12 col-md-8 col-lg-4" id="optionsDiv1" style="border-right: black; display: none;">
+                <p style="font-weight: bolder; padding-bottom: -30px;">Tác giả</p>
+                <div class="input-group" role="search">
+                    <input type="search" class="form-control rounded" placeholder="Có thể bỏ trống" aria-label="Search" aria-describedby="search-addon" name="authorSearch">
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2" id="optionsDiv2" style="display: none;">
+                <p style="font-weight: bolder; padding-bottom: -30px;">Tình trạng</p>
+                <select class="form-select" id="statusSelect" name="status" style="margin-top: 17px;">
+                    <option value="3">Tất cả</option>
+                    <option value="2">Đã hoàn thành</option>
+                    <option value="1">Đang tiến hành</option>
+                    <option value="0">Tạm ngưng</option>
+                </select>
+            </div>
+            <div class="col-12 col-lg-6" id="optionsDiv3" style="border-left: 2px solid #ccc; display: none;">
+                <p style="font-weight: bolder;">Thể loại</p>
+                <div class="row">
+                    <% for (let i = 0; i < genres.length; i++) { %>
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="<%= genres[i].genreID %>" name="genre" value="<%= genres[i].genreID %>">
+                            <label class="form-check-label" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><%= genres[i].genreName %></label>
+                        </div>
+                    </div>
+                    <% if ((i + 1) % 4 === 0) { %>
+                    </div>
+                    <div class="row">
+                        <% } %>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="container" style="margin-top: 80px">
+        <div class="row">
+          <div class="col-12">
+            <div class="container" style="margin-bottom: 10px">
+                <div id="demo" class="carousel slide" data-bs-interval="false">
+                    <!-- The slideshow/carousel -->
+                <div class="carousel-inner">
+                  <% const numSlides = Math.ceil(intersectedBooks.length / (6 * 6)); %>
+                  <% if (numSlides === 0) { %>
+                    <!-- Show a message if there are no books available -->
+                    <div class="carousel-item active">
+                      <p>No books available.</p>
+                    </div>
+                  <% } else { %>
+                    <% for (let slideIndex = 0; slideIndex < numSlides; slideIndex++) { %>
+                      <div class="carousel-item <%= slideIndex === 0 ? 'active' : '' %>">
+                        <div class="row">
+                          <% const startIndex = slideIndex * 6 * 6; %>
+                          <% const endIndex = Math.min(startIndex + (6 * 6), intersectedBooks.length); %>
+                          <% const booksInSlide = intersectedBooks.slice(startIndex, endIndex); %>
+                          <% for (let j = 0; j < booksInSlide.length; j++) { %>
+                            <div class="col-2">
+                              <div class="card" style="height: 250px; width: 200px; margin-bottom: 30px">
+                                <img class="card-img-top" style="height: 250px; width: 200px;" src="<%= bookCoverURL[booksInSlide[j].bookID] %>" alt="Book Cover">
+                                <div class="card-img-overlay">
+                                  <div class="card-img-overlay d-flex align-items-end justify-content-center" style = " bottom: 0; background: linear-gradient(180deg,transparent 0,rgba(0,0,0,.8) 150%,rgba(0,0,0,.8))">
+                                    <div class="card-title" style="margin-bottom: -5px; text-align: center">
+                                      <a href="/book/<%=[booksInSlide[j].bookID]%>" class="hover-effect" style="text-decoration: none; font-weight: bolder; color: rgb(255, 255, 255)">
+                                        <span class="hover-effect"><%= booksInSlide[j].title %></span>
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <% } %>
+                        </div>
+                      </div>
+                    <% } %>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Pagination links to change carousel slides -->
+    <div class = "container">
+        <% if (numSlides > 1) { %>
+            <ul class="pagination justify-content-end" style="margin: 20px 0;">
+            <li class="page-item"><a class="page-link" href="#" onclick="changeSlide('prev')">Previous</a></li>
+            <% for (let i = 0; i < numSlides; i++) { %>
+                <li class="page-item"><a class="page-link" href="#" onclick="changeSlide(<%= i %>)"><%= i + 1 %></a></li>
+            <% } %>
+            <li class="page-item"><a class="page-link" href="#" onclick="changeSlide('next')">Next</a></li>
+            </ul>
+        <% } %>
+    </div>
+   <!-- Footer -->
+   <%- include("./partials/footer") -%>  
+<script>
+    function toggleOptions() {
+        const optionsDiv1 = document.getElementById('optionsDiv1');
+        if (optionsDiv1.style.display === 'none') {
+          optionsDiv1.style.display = 'block';
+        } else {
+          optionsDiv1.style.display = 'none';
+        }
+        const optionsDiv2 = document.getElementById('optionsDiv2');
+        if (optionsDiv2.style.display === 'none') {
+          optionsDiv2.style.display = 'block';
+        } else {
+          optionsDiv2.style.display = 'none';
+        }
+        const optionsDiv3 = document.getElementById('optionsDiv3');
+        if (optionsDiv3.style.display === 'none') {
+          optionsDiv3.style.display = 'block';
+        } else {
+          optionsDiv3.style.display = 'none';
+        }
+      }
+      function changeSlide(target) {
+        const demoCarousel = new bootstrap.Carousel(document.querySelector('#demo'));
+        if (target === 'prev') {
+          demoCarousel.prev();
+        } else if (target === 'next') {
+          demoCarousel.next();
+        } else {
+          demoCarousel.to(target);
+        }
+      }  
+</script>

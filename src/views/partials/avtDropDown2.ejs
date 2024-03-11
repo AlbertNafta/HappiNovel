@@ -1,0 +1,66 @@
+<% if (user) { %>
+  <div class="profile float-end" onmouseover="hoverOn(this)" onmouseout="hoverOff(this)">
+    <div class="user-profile">
+        <p><%= user.profileName%></p>
+    </div>
+    <div class="img-box">
+      <img
+        src= "<%= user.avatarURL%>"
+        alt="some user image"
+      />
+    </div>
+  </div>
+  <div class="menu">
+    <ul>
+      <li>
+        <a href="\profile\<%=user.userID%>"><i class="fa-regular fa-user"></i>Tài khoản</a>
+      </li>
+      <li>
+        <a href="/notification"><i class="far fa-bell"></i>Thông báo</a>
+      </li>
+      <li>
+        <a href="/readinghistory"><i class="fas fa-history"></i>Lịch sử đọc</a>
+      </li>
+      <li>
+        <a href="/bookmark"><i class="far fa-bookmark"></i>Sách yêu thích</a>
+      </li>
+      <% if(user.permission != 0){%>
+      <li>
+        <a href="/manage"><i class="fa-solid fa-gear"></i>Quản lý</a>
+      </li>
+      <%}%>
+      <li>
+        <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i>Thoát</a>
+      </li>
+    </ul>
+  </div>
+  
+  <script>
+    let profile = document.querySelector(".profile");
+    let menu = document.querySelector(".menu");
+    let userProfile = document.querySelector(".user-profile");
+  
+    document.onclick = function (e) {
+      if (!profile.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.remove("active");
+      }
+    };
+  
+    profile.onclick = function (e) {
+      menu.classList.toggle("active");
+    };
+  
+    function hoverOn(e){
+      e.style.color = "#36a189";
+    }
+    function hoverOff(e){
+      e.style.color = "rgb(72, 72, 72)";
+    }
+  
+  </script>
+  <% } else { %>
+    <li class="nav-item rounded-3">
+      <b><a class="nav-link" href="/login">Đăng nhập</a></b>
+    </li>
+  <% } %>
+  

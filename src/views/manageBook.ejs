@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head> 
+	<title>Thông tin sách</title>
+    <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+	<base href="http://localhost:3000/">
+    <%- include("./partials/head") -%>
+	<link rel="stylesheet" href="./css/stylesBookInfo.css">
+	<link rel="stylesheet" href="./css/manageBook.css">
+
+</head>
+<body>
+
+	<%- include("./partials/navigation2") -%>
+    
+    <%- include("./partials/coverImg") -%>\
+	<!-- Book Info -->
+	<div class="container ">
+		<div class="row clearfix">
+			<!-- First Section -->
+			<div class="col-12 col-lg-9 float-left border rounded-2 " style="background-color: white;">
+				<div class="d-flex flex-column" style="min-height: 0;">
+					<div class="row mt-3 mb-2">
+						<div class="col-md-auto">
+							<img src="<%=book.coverImg%>" class="img-fluid rounded-2" alt="Book Cover" style="max-width: 300px; max-height: 300px;">
+						</div>                    
+						<div class="col-md">
+							<div class="row">
+								<h2><b><%= book.title %></b></h2>
+							</div>
+
+							<div class="row">
+								<div class="mb-2">
+									<% genresOfBook.forEach(genre => { %>
+										<a href="/filter?genre=<%=genre.genreID%>" class="linkHref">
+											<button type="button" id="genreButton" class="btn btn-sm btn-secondary mb-1 rounded-5"><%= genre.genreName %></button>
+										</a>
+									<% }) %>
+								</div>
+							</div>
+							
+							<div class="row">
+								<span>
+									<b>
+										Tác giả:
+									</b> <%= book.authorName %></p>
+								</span>
+							</div>
+
+							<div class="row">
+								<span>
+									<b>Tình trạng:</b> 
+									<% if (book.status === 0) { %>
+										Tạm ngưng
+									<% } else if (book.status === 1) { %>
+										Đang tiến hành 
+									<% } else if (book.status === 2) { %>
+										Hoàn thành 
+									<% } %>
+								</span>
+							</div>
+							<% if (book.isPending == 1) { %>
+								<div id="pendingBook" class="row mt-5"> 
+
+									<div class="col-auto"><button id="approveBook" class="btn btn-success rounded-5"><span>
+										<b>
+											Duyệt
+										</b>
+									</span></button></div>
+	
+									<div class="col-auto"><button id="rejectBook" class="btn btn-danger rounded-5"><span>
+										<b>
+											Từ chối
+										</b>
+									</span></button></div>
+								</div>
+							<% } %>
+												
+						</div>
+						
+					</div>
+			
+					<hr>
+					<!-- Second Section -->
+					<div class="col-md-12 mb-2 flex-grow-1">
+						<h4><b>Tóm tắt</b></h4>
+						<%- book.summary %>
+					</div>
+				</div>
+			</div>
+			<!-- Sidebar -->
+			<div class="col-12 col-lg-3 float-right rounded-2 mb-3">
+				<div class="card">
+					<div class="card-header text-center" style="border: 1px; background-color: #36a189;">
+						<h5><span><b>Thông Tin Người Đăng</b></span></h5>
+					</div>
+					<div class="card-body row d-flex align-items-center " style="border: 1px;">
+						<div class="col-md-auto ">
+							<img src="<%=author.avatarURL%>" alt="Author Avatar" class="img-fluid rounded-circle" width="60px" height="60px">
+						</div>
+						<div class="col-md-auto ">
+							<h5><span><b><a class="userLink" href="/profile/<%=author.userID%>"><%= author.profileName %></a></b></span></h5>
+						</div>
+					</div>
+				</div>
+
+				<div class="card mt-3">
+					<div class="card-header text-center" style="border: 1px; background-color: #36a189;">
+						<h5><span><b>Chú Thích Thêm</b></span></h5>
+					</div>
+					<div class="card-body row" style="border: 1px;  padding-bottom: 0;">
+						<%- book.note %>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div id="contentTable" style="padding: 0;">
+
+				<!-- <div class="row"> -->
+					<div class="form-check mt-5 mb-3 col-auto">
+						<input class="form-check-input" type="checkbox" id="selectAll" style="margin-top: 8px;">
+						<label class="form-check-label" for="selectAll">
+							Chọn tất cả
+						</label>
+
+						<button id="approveChap" class="ms-4 btn btn-success rounded-5 col-auto"><span>
+							<b>
+								Duyệt
+							</b>
+						</span></button>
+	
+						<button id="rejectChap" class="ms-2 btn btn-danger rounded-5 col-auto"><span>
+							<b>
+								Từ chối
+							</b>
+						</span></button>
+						
+					</div>	
+					
+				<!-- </div> -->
+				
+
+				<% let cntVol = 0%>
+				<% for (let vol of book.volumes) {%>
+					<%cntVol++%>
+					<% if (cntVol == 1) { %>
+						<div class="list-group col-12 col-lg-9 float-left" >
+					<% } else {%>
+						<div class="list-group col-12 col-lg-9 float-left mt-5" >
+					<% }%>
+					<!-- <div class="list-group col-12 col-lg-9 float-left mt-5" > -->
+						<div class="list-group-item list-group-item-dark" style="color: black">
+							<h5 class="mb-0"><b>Volume <%=cntVol + ": " + vol.volName%></b></h5>
+						</div>
+						<% let cntChap = 0%>
+						<% for (let chap of vol.chapters) {%>
+							<%cntChap++%>
+							<%if (chap.isPending == 0) {%>
+								<!-- <%status = "Hoàn thành"%> -->
+								<%status = '<span class="float-end rounded-5 pendingState" style="background: gray;">Hoàn thành</span>'%>
+								
+							<%} else if (chap.isPending == 1) { %>
+								<!-- <%status = "Chờ duyệt"%> -->
+								<%status = '<span class="float-end rounded-5 pendingState" style="background: yellow; ">Chờ duyệt</span>'%>
+							<%} else if (chap.isPending == 2) { %>
+								<!-- <%status = "Cập nhật"%> -->
+								<%status = '<span class="float-end rounded-5 pendingState" style="background: #36a189; ">Cập nhật</span>'%>
+							<%} else if (chap.isPending == 3) { %>
+								<%status = '<span class="float-end rounded-5 pendingState" style="background: red; ">Đã xoá</span>'%>
+							<%} %>
+
+							<% if (cntChap & 1) { %>
+								<a href="/managePending/<%=book.bookID%>/<%=chap._id%>" class="list-group-item list-group-item-action list-group-item-light" >
+									<input class="form-check-input" type="checkbox" value="<%=chap._id%>">
+									Chapter <%=cntChap +": " + chap.chapName%><%-status%>
+								</a>
+							<% } else {%>
+								<a href="/managePending/<%=book.bookID%>/<%=chap._id%>" class="list-group-item list-group-item-action list-group-item-secondary" >
+									<input class="form-check-input" type="checkbox" value="<%=chap._id%>">
+									Chapter <%=cntChap +": " + chap.chapName%><%-status%>
+								</a>
+							<%}%>
+						<%}%>
+					</div>
+				<%}%>
+			</div>
+			
+	    </div>	
+	</div>
+	<%- include("./partials/footer") -%>
+
+	<!-- Book pending -->
+	<script>
+		approveBook = document.querySelector('#approveBook');
+		rejectBook = document.querySelector('#rejectBook')
+		bookID = Number('<%=book.bookID%>') // Bien chua BookID
+		approveBook.addEventListener('click', async function(e) {
+			try {
+				const res = await fetch('/managePending/approveBook', {
+					method: 'put',
+					body: JSON.stringify({bookID}),
+					headers: {'Content-Type': 'application/json'}
+				});
+				const check = await res.json()
+			} catch(err) {
+				console.log(err)
+			}
+			$("#pendingBook").remove();
+		})
+
+		rejectBook.addEventListener('click', async function(e) {
+			try {
+				const res = await fetch('/managePending/rejectBook', { 
+					method: 'delete',
+					body: JSON.stringify({bookID}),
+					headers: {'Content-Type': 'application/json'}
+				});
+				const check = await res.json()
+			} catch(err) {
+				console.log(err)
+			}
+			location.assign('/managePending')
+		})
+
+	</script>
+
+	<!-- Chap Pending -->
+	<script>
+		approveChap = document.querySelector('#approveChap');
+		rejectChap = document.querySelector('#rejectChap')
+		
+		approveChap.addEventListener('click', async function(e) {
+			checkboxes = document.querySelectorAll("input[type=checkbox][value]:checked")
+			objIDList = []
+			checkboxes.forEach(checkbox => {
+				objIDList.push(checkbox.value)
+			})
+
+			try {
+				const res = await fetch('/managePending/approveChap', { // Chinh lai cai API
+					method: 'put',
+					body: JSON.stringify({objIDList}),
+					headers: {'Content-Type': 'application/json'}
+				});
+				const check = await res.json()
+			} catch(err) {
+				console.log(err)
+			}
+			location.reload()
+		})
+
+		rejectChap.addEventListener('click', async function(e) {
+			checkboxes = document.querySelectorAll("input[type=checkbox][value]:checked")
+			objIDList = []
+			checkboxes.forEach(checkbox => {
+				objIDList.push(checkbox.value)
+			})
+			
+			try {
+				const res = await fetch('/managePending/rejectChap', { // Chinh lai cai API
+					method: 'delete',
+					body: JSON.stringify({objIDList}),
+					headers: {'Content-Type': 'application/json'}
+				});
+				const check = await res.json()
+			} catch(err) {
+				console.log(err)
+			}
+			location.reload()
+		})
+	</script>
+
+	<!-- Check box function -->
+	<script>
+		$('#selectAll').click(function(event) {   
+			if(this.checked) {
+				$(':checkbox').prop('checked', true);
+			} else {
+				$(':checkbox').prop('checked', false);
+			}
+		}); 
+	</script>
+
+</body>
+</html>
+

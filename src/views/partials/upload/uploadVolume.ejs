@@ -1,0 +1,98 @@
+
+<form id="form2" style="display: none;">
+    <div class="d-flex justify-content-center rounded-2 section-title" style="margin-bottom: 20px;">
+        <span><i class="fa-solid fa-book-open"></i>  THÔNG TIN CHƯƠNG</span>
+    </div>
+
+    <!-- Tên sách -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tên sách <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <select id="bookSelect" class="form-select">
+                <% for (let b = 0; b < books.length; b++) {%>
+                    <option data-bookID="<%=books[b].bookID%>" data-author="<%=books[b].authorName%>"><%=books[b].title%></option>
+                <%}%>
+            </select>
+        </div>
+    </div>
+
+    <!-- Tác giả -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tác giả <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <input id="authorSelect" type="text" class="form-control" value="" disabled>
+        </div>
+    </div>
+
+    <!-- Tên tập -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tên tập <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="Tên tập" name="volName" required pattern="\S(.*\S)?" title="This field is required">
+        </div>
+    </div>
+
+    <div class="row mb-3 float-end me-5">
+        <button class="btn btn-success">Thêm tập</button>
+    </div>
+    <!-- <div class="row" style="visibility: hidden;">space</div>
+    <div class="row" style="visibility: hidden;">space</div>
+    <div class="row" style="visibility: hidden;">space</div>
+    <div class="row" style="visibility: hidden;">space</div>
+    <div class="row" style="visibility: hidden;">space</div>
+    <div class="row" style="visibility: hidden;">space</div> -->
+        
+</form>
+
+<script>
+    form2 = document.getElementById( "form2" );
+    bookSelect = form2.querySelector( "#bookSelect" );
+    authorSelect = form2.querySelector( "#authorSelect" );
+    async function updateAuthorInput() {
+        const selectedOption = bookSelect.options[$("#bookSelect").prop('selectedIndex')];
+        const selectedAuthor = selectedOption.getAttribute('data-author');
+        // console.log(selectedAuthor);
+        form2.querySelector( "#authorSelect" ).value = selectedAuthor;
+    }
+    updateAuthorInput()
+    bookSelect.addEventListener('change', updateAuthorInput);
+</script>
+<script>
+    form2.addEventListener('submit', async function(e) {
+        e.preventDefault()
+        selectedOption = bookSelect.options[$("#bookSelect").prop('selectedIndex')];
+        bookID = selectedOption.getAttribute('data-bookID');
+        volName = form2.volName.value
+        try {
+          const res = await fetch('/upload/addVolume', {
+            method: 'post',
+            body: JSON.stringify({bookID, volName}),
+            headers: {'Content-Type': 'application/json'}
+          });
+          const data = await res.json()
+
+          attachModal("Thêm tập mới thành công.")
+            var modalConfirm = function(){
+                $("#modalbtn1").on("click", function(){
+                    location.reload()
+                    $("#modal2btn").modal('hide');
+                });
+                
+                $("#modalbtn2").on("click", function(){
+                    location.reload()
+                    $("#modal2btn").modal('hide');
+                });
+            };
+            await modalConfirm()
+        }
+        catch (err) {
+          console.log(err);
+        } 
+    })
+</script>

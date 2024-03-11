@@ -1,0 +1,155 @@
+
+<form id="form3" style="display: none;">
+    <div class="d-flex justify-content-center rounded-2 section-title" style="margin-bottom: 20px;">
+        <span><i class="fa-solid fa-book-open"></i>  THÔNG TIN TẬP</span>
+    </div>
+
+    <!-- Tên sách -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tên sách <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <select id="bookSelect" class="form-select">
+                <% for (let b = 0; b < books.length; b++) {%>
+                    <option data-author="<%=books[b].authorName%>" data-bookID="<%=books[b].bookID%>"><%=books[b].title%></option>
+                <%}%>
+            </select>
+        </div>
+    </div>
+
+    <!-- Tác giả -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tác giả <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <input id="authorSelect" type="text" class="form-control" disabled>
+        </div>
+    </div>
+
+    <!-- Tên tập -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tên tập <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <select id="volumeSelect" class="form-select">
+            </select>
+        </div>
+    </div>
+
+    <!-- Tên chương -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tên chương <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="Tên chương" name="chapName" required pattern="\S(.*\S)?" title="This field is required">
+        </div>
+    </div>
+
+    <!-- Nội dung chương -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end mt-2">
+            <b>Nội dung <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <textarea id="content1" name="content">Welcome to HappiNovel!</textarea>
+            <script>
+                tinymce.init({
+                    selector: 'textarea#content1'
+                });
+            </script>
+        </div>
+    </div>
+
+    <div class="row mb-3 float-end me-5">
+        <button class="btn btn-success">Thêm chương</button>
+    </div>
+
+        
+</form>
+<script>
+    var form = document.getElementById( "form3" );
+    var bookSelect = form.querySelector( "#bookSelect" );
+    var authorSelect = form.querySelector( "#authorSelect" );
+    async function updateAuthorInput() {
+        const selectedOption = bookSelect.options[bookSelect.selectedIndex];
+        const selectedAuthor = selectedOption.getAttribute('data-author');
+        const bookID = selectedOption.getAttribute('data-bookID');
+        // console.log(bookSelect.options)
+        authorSelect.value = selectedAuthor;
+        try {
+            const res = await fetch('/upload', {
+            method: 'post',
+            body: JSON.stringify({bookID}),
+            headers: {'Content-Type': 'application/json'}
+            });
+            const volList = await res.json()
+            $("#volumeSelect").empty();
+            var volumeSelect = form.querySelector( "#volumeSelect" );
+            for (let i = 0; i < volList.data.length; i++) {
+                const curVol = volList.data[i];
+                const optionElement = document.createElement("option");
+                optionElement.textContent = curVol.volName;
+                // optionElement.setAttribute("data-volObjID", curVol._id);
+                optionElement.setAttribute("data-volID", curVol.volID);
+                volumeSelect.appendChild(optionElement);
+            }
+        }
+        catch (err) {
+          console.log(err);
+        }
+    }
+    updateAuthorInput()
+    bookSelect.addEventListener('change', updateAuthorInput)
+</script>
+
+<script>
+    form = document.getElementById( "form3" );
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault()
+        const bookSelect = form.querySelector( "#bookSelect" );
+        const selectedBookOption = bookSelect.options[bookSelect.selectedIndex];
+        const bookID = selectedBookOption.getAttribute('data-bookID');
+
+        const volumeSelect = form.querySelector( "#volumeSelect" );
+        const selectedVolumeOption = volumeSelect.options[volumeSelect.selectedIndex];
+        const volID = selectedVolumeOption.getAttribute('data-volID');
+        
+        const chapName = form.chapName.value
+        const chapContent = tinymce.get('content1').getContent()
+        checked = tinymce.get('content1').getContent({format: 'text'})
+        if(checked.trim() === '') {
+            alert("Vui lòng nhập nội dung tóm tắt")
+            return false
+        }
+
+        try {
+          const res = await fetch('/upload/addChapter', {
+            method: 'post',
+            body: JSON.stringify({bookID, volID, chapName, chapContent}),
+            headers: {'Content-Type': 'application/json'}
+          });
+          const data = await res.json()
+
+          attachModal("Thêm chuơng mới thành công, vui lòng chờ kiểm duyệt.")
+            var modalConfirm = function(){
+                $("#modalbtn1").on("click", function(){
+                    location.reload()
+                    $("#modal2btn").modal('hide');
+                });
+                
+                $("#modalbtn2").on("click", function(){
+                    location.reload()
+                    $("#modal2btn").modal('hide');
+                });
+            };
+            await modalConfirm()
+        }
+        catch (err) {
+          console.log(err);
+        } 
+    })
+</script>

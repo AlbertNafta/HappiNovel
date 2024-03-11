@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+  <!-- <title>Trang chủ - Cổng đọc truyện số 1 Việt Nam</title> -->
+  <title>Quản lý bình luận</title>
+  <%- include("./partials/head") -%>
+    
+
+
+</head>
+<body>
+    <!-- Navigator bar -->
+    <%- include("./partials/navigation2") -%>
+    <%- include("./partials/coverImg") -%>
+    
+    <div class="container border rounded p-3" style="margin-bottom: 50px;">
+    <!-- Tiêu đề -->
+    <h2><i class="fa-solid fa-users"></i> <strong> Quản lý bình luận</strong></h2>
+      <div class="row">
+      <div class="col-md-4 mt-2  d-flex align-items-center ">
+        <div class="input-group "  style="max-width: 260px;"  >
+          <span class="input-group-text" id="search-icon" style="background-color: #D9D9D9;"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="text" class="form-control" style="background-color: #D9D9D9;" 
+                 id="search-input" placeholder="Tìm kiếm theo tên,id,etc.">
+        </div>
+      </div>
+      <div class="col-md-2 mt-2  d-flex align-items-center">
+          <span class="me-3">
+          <!-- Thêm biểu tượng vào đây, ví dụ: Font Awesome icon -->
+          <i class="fa-solid fa-filter"></i>
+          </span>
+          <select id="filter-select" class="form-select" style="max-width: 110px;background-color: #D9D9D9;">
+                    <option>Tất cả</option>
+                    <option>Pass </option>
+                    <option>Pending </option>
+                    </select>
+      </div>
+      <div class="col-md-3 mt-2 d-flex align-items-center ">
+        <button id="button-delete" class="btn btn-outline " style="background-color: #D9D9D9;">Xóa comment</button>
+      </div>
+      <div class="col-md-3 mt-2 d-flex align-items-center">
+        <button id="button-pass" class="btn btn-outline " style="background-color: #D9D9D9;">Bỏ qua</button>
+      </div>
+      <!-- <div class="col-md-2 mt-4 d-flex justify-content-center">
+      
+         <ul class="pagination ">
+            <li >
+          <div class="btn btn-outline btn-lg btn-text">1 of 7</div>
+          </li>
+           <li >
+          <a href="#" aria-label="Trang trước" class="btn btn-outline btn-lg">
+          <i class="fas fa-chevron-left"></i>
+          </a>
+          </li>
+           
+          <li class="page-item">
+            <a href="#" aria-label="Trang sau" class="btn btn-outline btn-lg">
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </li>
+          </ul>
+        </div>
+      </div> -->
+      
+      <!-- Bảng -->
+        
+  <div class="table-responsive mt-2">
+    <table id="data-table" class="table table-hover table-borderless ">
+      <thead>
+        <tr>
+          <th class="border-bottom " >
+            
+            <input type="checkbox" id="checkAll">
+          </th>
+          <th class="border-bottom" >STT <i class="fa-solid fa-sort"></i> </th>
+          <th class="border-bottom" >Username <i class="fa-solid fa-sort"></i></th>
+          <th class="border-bottom" >Tên sách <i class="fa-solid fa-sort"></i></th>
+          <!-- <th class="border-bottom" >UserReport <i class="fa-solid fa-sort"></i></th> -->
+          <th class="border-bottom" >Nội dung <i class="fa-solid fa-sort"></i></th>
+          <th class="border-bottom text-center"  >Tình trạng <i class="fa-solid fa-sort"></i></th>
+        </tr>
+      </thead>
+      <tbody id="bookTableBody">
+        <% let count = 1; %>
+        <% Comments.forEach((Comment) => { %>
+        <tr >
+          <td><input type="checkbox" data-commentID = "<%= Comment.commentID %>" data-bookID = "<%= Comment.bookID %>" data-status = "<%= Comment.status %>" data-userID = "<%= Comment.userID %>"></td>
+          <td> <%= count %> </td>
+          <td>
+            <%= Comment.username %>
+          </td>
+          <td>
+            <span class="hover-content" title="<%= Comment.bookTitle %>">
+              <% const maxTitleLengthh = 30; %>
+              <% const displayedTitlee = Comment.bookTitle && Comment.bookTitle.length > maxTitleLengthh ? Comment.bookTitle.slice(0, maxTitleLengthh) + "..." : Comment.bookTitle; %>
+              <%= displayedTitlee %>
+            </span>
+          </td>
+          <td>
+            <span class="hover-content" title="<%= Comment.contentfile %>">
+              <% const maxTitleLength = 30; %>
+              <% const displayedTitle = Comment.contentfile.length > maxTitleLength ? Comment.contentfile.slice(0, maxTitleLength) + "..." : Comment.contentfile; %>
+              <%= displayedTitle %>
+            </span>
+          </td>
+          <td class="d-flex justify-content-center">
+            <% if (Comment.status === 0) { %>
+              <span class="p-1 rounded" style="background-color: #67FF88;">Pass</span>
+              <% } 
+              else if (Comment.status === 1) { %>
+              <span class="p-1 rounded" style="background-color: #FDE9B5;">Pending</span>
+              <% }
+              else { %>
+              <span class="p-1 rounded" style="background-color: #FF6767;">Unknown</span>
+              <% } %>
+          </td>
+        </tr>
+        <% count++; %>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+    </div> 
+    <%- include("./partials/modal_error") -%>
+    
+    <%- include("./partials/modal_done") -%>
+  
+      <!-- Dòng container với 6 cột -->
+    
+      
+    
+      
+  </body>    
+    
+<style>
+  .btn-text {
+    cursor: default; /* Không thay đổi con trỏ chuột khi di chuột vào */
+    pointer-events: none; /* Vô hiệu hóa sự kiện chuột cho thẻ */
+    color: #6c757d; /* Màu chữ khi vô hiệu hóa */
+    text-decoration: none; /* Bỏ gạch chân */
+  }
+</style>
+<style>
+  .p-1 {
+    width: 90px; /* Đặt chiều rộng cố định cho các khung */
+    text-align: center; /* Căn giữa nội dung trong khung */
+  }
+</style>
+<script>
+  function setFixedColumnWidths() {
+    const table = document.querySelector(".table");
+    const headerCells = table.querySelectorAll("thead th");
+    const dataRows = table.querySelectorAll("tbody tr");
+
+    headerCells.forEach((headerCell, index) => {
+      const width = getComputedStyle(headerCell).width;
+      dataRows.forEach((dataRow) => {
+        const cell = dataRow.querySelectorAll("td")[index];
+        cell.style.width = width;
+      });
+    });
+  }
+
+  // Gọi hàm setFixedColumnWidths() khi trang được tải
+  window.addEventListener("load", setFixedColumnWidths);
+</script>
+
+<script>
+  function getStatusFromText(statusText) {
+    const lowerCaseStatus = statusText.toLowerCase();
+    if (lowerCaseStatus.includes("pending")) {
+      return "Pending";
+    } else if (lowerCaseStatus.includes("pass")) {
+      return "Pass";
+    } else {
+      return "Unknown";
+    }
+  }
+  function removeAccentsAndLowerCase(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  }
+
+  const searchInput = document.getElementById("search-input");
+  const filterSelect = document.getElementById("filter-select");
+  const tableRows = document.querySelectorAll("tbody tr");
+
+  function filterRows() {
+    const searchTerm = removeAccentsAndLowerCase(searchInput.value);
+    const selectedFilter = filterSelect.value;
+
+    tableRows.forEach((row) => {
+      const username = removeAccentsAndLowerCase(row.querySelector("td:nth-child(3)").textContent);
+      const bookname = removeAccentsAndLowerCase(row.querySelector("td:nth-child(4)").textContent);
+
+      const titleMatch = username.includes(searchTerm);
+      const authorMatch = bookname.includes(searchTerm);
+
+      // Lấy giá trị book.status từ cột thứ 8 (td:nth-child(8))
+      const status = row.querySelector("td:nth-child(6)").textContent;
+
+      // Kiểm tra trạng thái 'stopped'
+      const statusValue = getStatusFromText(status);
+
+      const statusMatch = (selectedFilter === "Tất cả") ||
+        (statusValue === selectedFilter);
+
+      if ((titleMatch || authorMatch) && statusMatch) {
+        row.style.display = "table-row";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  }
+
+  searchInput.addEventListener("keyup", filterRows);
+  filterSelect.addEventListener("change", filterRows);
+</script>
+<script>
+  // Bắt sự kiện khi người dùng nhấn nút appprove
+  document.getElementById("button-pass").addEventListener("click",async function() {
+    // Lấy danh sách các checkbox đã chọn
+    const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+
+    // Tạo một mảng chứa các bookID đã chọn
+    const selectedCommentIDs = [];
+    checkboxes.forEach((checkbox) => {
+      selectedCommentIDs.push({
+        bookID: checkbox.getAttribute("data-bookID"),
+        commentID: checkbox.getAttribute("data-commentID"),
+        userID: checkbox.getAttribute("data-userID"),
+        status: checkbox.getAttribute("data-status"),
+      });
+    });
+    
+    // Gửi dữ liệu lên server bằng 
+    const allArePending = selectedCommentIDs.length > 0 && selectedCommentIDs.every(comment => comment.status == "1");
+
+    if (allArePending) {
+      try {
+        const response = await fetch("/process-pass", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ selectedCommentIDs }),
+        });
+        const result = await response.text();
+        if (result === "Done") {
+          // Nếu kết quả là "Done", hiển thị thông báo thành công
+          attachModal2("Cập nhật thành công!");
+          var modalConfirm2 = function () {
+            $("#modaldone1").on("click", function () {
+              location.assign('/manageComment');
+              $("#staticBackdrop2").modal('hide');
+            });
+          };
+          await modalConfirm2()
+         } else {
+          // Nếu không đủ điều kiện, hiển thị thông báo lỗi
+                attachModal("Đã có lỗi xảy ra!")
+                // $("#modal2btn").modal('show');
+                var modalConfirm = function(){
+                  $("#modalerror1").on("click", function(){
+                    location.assign('/manageComment')
+                    //res.redirect('/manage');
+                    $("#staticBackdrop").modal('hide');
+                  });
+                  
+                };
+                await modalConfirm()
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      // Nếu không đủ điều kiện, hiển thị thông báo lỗi
+            attachModal("Vui lòng kiểm tra lại!")
+            var modalConfirm = function(){
+              $("#modalerror1").on("click", function(){
+                location.assign('/manageComment')
+                $("#staticBackdrop").modal('hide');
+              });
+            };
+            await modalConfirm()
+    }
+  });
+</script>
+<script>
+  const checkAllButton = document.getElementById("checkAll");
+  const checkboxes = document.querySelectorAll("input[type=checkbox][data-commentID]");
+
+  // Bắt sự kiện khi click vào nút "Check All"
+  checkAllButton.addEventListener("click", function() {
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = checkAllButton.checked;
+    });
+  });
+
+  // Bắt sự kiện khi click vào một checkbox bất kỳ trong danh sách
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", function() {
+      // Kiểm tra nếu có bất kỳ checkbox nào không được check thì không chọn "Check All"
+      checkAllButton.checked = checkboxes.length === document.querySelectorAll("input[type=checkbox][data-commentID]:checked").length;
+    });
+  });
+  
+  
+  document.getElementById("button-delete").addEventListener("click", async function() {
+    // Lấy danh sách các checkbox đã chọn
+    const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+
+    // Tạo một mảng chứa các bookID đã chọn
+    const selectedCommentIDs = [];
+    checkboxes.forEach((checkbox) => {
+      selectedCommentIDs.push({
+        bookID: checkbox.getAttribute("data-bookID"),
+        commentID: checkbox.getAttribute("data-commentID"),
+        userID: checkbox.getAttribute("data-userID"),
+        status: checkbox.getAttribute("data-status"),
+      });
+    });
+    
+    // Gửi dữ liệu lên server bằng AJAX
+    const allArePending = selectedCommentIDs.length > 0 && selectedCommentIDs.every(comment => comment.status == "1");
+
+    if (allArePending) {
+      try {
+        const response = await fetch("/delete-comments", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ selectedCommentIDs }),
+        });
+  
+        const result = await response.text();
+        if (result === "Done") {
+          // Nếu kết quả là "Done", hiển thị thông báo thành công
+          attachModal2("Cập nhật thành công!");
+          var modalConfirm22 = function () {
+            $("#modaldone1").on("click", function () {
+              location.assign('/manageComment');
+              $("#staticBackdrop2").modal('hide');
+            });
+          };
+          await modalConfirm22()
+         } else {
+          // Nếu không đủ điều kiện, hiển thị thông báo lỗi
+                attachModal("Đã có lỗi xảy ra!")
+                // $("#modal2btn").modal('show');
+                var modalConfirm = function(){
+                  $("#modalerror1").on("click", function(){
+                    location.assign('/manageComment')
+                    //res.redirect('/manage');
+                    $("#staticBackdrop").modal('hide');
+                  });
+                  
+                };
+                await modalConfirm()
+                
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      // Nếu không đủ điều kiện, hiển thị thông báo lỗi
+            attachModal("Vui lòng kiểm tra lại!")
+            // $("#modal2btn").modal('show');
+            var modalConfirm3 = function(){
+              $("#modalerror1").on("click", function(){
+                location.assign('/manageComment')
+                //res.redirect('/manage');
+                $("#staticBackdrop").modal('hide');
+              });
+              
+            };
+            await modalConfirm3()
+           
+    }
+
+  });
+</script>
+
+    <!-- Footer -->
+    <div class = "row" style = "margin-top:70px"></div>
+   <%- include("./partials/footer") -%> 
+
+</html>
+

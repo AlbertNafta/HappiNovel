@@ -1,0 +1,30 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="modal2btn"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="modal2btnLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modal2btnLabel">THÔNG BÁO</h1>
+      </div>
+      <div class="modal-body">...</div>
+      <div class="modal-footer">
+        <button id="modalbtn1" type="button" class="btn btn-secondary">Đóng</button>
+        <button id="modalbtn2" type="button" class="btn btn-primary">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function attachModal(content){
+    document.querySelector(".modal-body").innerHTML = content;
+    $("#modal2btn").modal('show');
+  }
+</script>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Quản lý sách</title>
+    <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+    <%- include("./partials/head") -%>
+</head>
+<body>
+    <%- include("./partials/navigation") -%>
+    
+    <%- include("./partials/coverImg") -%>
+
+
+    <!-- Sections -->
+    <div class="container">
+        <div class="row">
+            <!-- Book menu -->
+            <div class="col-md-3">
+                <div class="d-flex justify-content-center rounded-2 section-title" style="margin-bottom: 5px;">
+                    <span><i class="fa-solid fa-book"></i> SÁCH CỦA BẠN</span>
+                </div>
+
+                <div class="row d-flex justify-content-center mb-1">
+                    <button onclick="showContent('form1')" class="col-5 me-1 mb-1 btn btn-success"><b>+ Sách</b></button>
+                    <button onclick="showContent('form2')" class="col-5 mb-1 btn btn-success"><b>+ Tập</b></button>
+                    <button onclick="showContent('form3')" class="col-10 btn btn-success"><b>+ Chương</b></button>
+                </div>
+
+                <div id="accordion">
+                <% for (let i = 0; i < books.length; i++) { %>
+                    <% if (i == 0) {%>
+                        <div class="list-group border-book-menu-top">
+                    <% } else {%>
+                        <div class="list-group border-book-menu-mid">
+                    <% } %>
+                        <a href="#book<%=i%>" class="bg-book text-white list-group-item" data-bookID="<%=books[i]._id%>" data-bs-toggle="collapse" data-bs-parent="#accordion"><%=books[i].title%><span class="float-end"><i class="fa-solid fa-caret-down"></i></span></a>
+                        <div id="book<%=i%>" class="collapse">
+                            <div class="list-group border-book-menu-mid">
+                            <% for (let j = 0; j < books[i].volumes.length; j++) { %>
+                                <% if (books[i].volumes[j]._id == undefined) continue%>
+                                <a href="#vol<%=i%><%=j%>" class="bg-volume list-group-item collapsed" data-volID="<%=books[i].volumes[j]._id%>" data-bs-toggle="collapse" data-bs-parent="#book<%=i%>"><%=books[i].volumes[j].volName%><span class="float-end"><i class="fa-solid fa-caret-down"></i></span></a>
+                                <div id="vol<%=i%><%=j%>" class="collapse">
+                                    <div class="list-group border-book-menu-mid">
+                                    <% for (let k = 0; k < books[i].volumes[j].chapters.length; k++) { %>
+                                        <a href="#chap<%=i%><%=j%><%=k%>" class=" bg-chap list-group-item collapsed" data-chapID="<%=books[i].volumes[j].chapters[k]._id%>" data-bs-toggle="collapse" data-bs-parent="#vol<%=i%><%=j%>">
+                                            <b><%=books[i].volumes[j].chapters[k].chapName%><span class="float-end"><i class="fa-solid fa-caret-left"></i></span></b>
+                                        </a>
+                                        <div id="chap<%=i%><%=j%><%=k%>" class="collapse"></div>
+                                    <%}%>
+                                    </div>
+                                </div>
+                            <%}%>
+                            </div>
+                        </div>
+                    </div>
+                <%}%>
+                </div>
+                
+
+            </div>
+            <!-- Infor menu -->
+            <div id="addForm" class="col-md-9 rounded-1 border" style="padding-left: 0; padding-right: 0;">
+                <%- include("./partials/upload/uploadBook") -%>         
+                <%- include("./partials/upload/uploadVolume") -%>         
+                <%- include("./partials/upload/uploadChapter") -%>         
+                <%- include("./partials/upload/updateBook") -%>         
+                <%- include("./partials/upload/updateVolume") -%>         
+                <%- include("./partials/upload/updateChapter") -%>         
+            </div>    
+            
+        </div>
+    </div>
+    <%- include("./partials/footer") -%>
+
+    <script>
+        const form1 = document.getElementById("form1");
+        const form2 = document.getElementById("form2");
+        const form3 = document.getElementById("form3");
+        const form4 = document.getElementById("form4");
+        const form5 = document.getElementById("form5");
+        const form6 = document.getElementById("form6");
+
+        function showContent(selectForm) {
+            form1.style.display = "none";
+            form2.style.display = "none";
+            form3.style.display = "none";
+            form4.style.display = "none";
+            form5.style.display = "none";
+            form6.style.display = "none";
+            const form = document.getElementById(selectForm);
+            form.style.display = "block";
+        }
+    </script>
+</body>
+</html>
+
+    
+
+

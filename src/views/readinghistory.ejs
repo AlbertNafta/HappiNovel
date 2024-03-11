@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+      <meta charset="UTF-8">
+      
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+      <meta name="description" content="Đọc HappiNovel, trang web tốt nhất HCMUS" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Lịch sử đọc</title>
+      <style data-tag="reset-style-sheet">
+      </style>
+      <style>
+            /* Custom CSS to remove the outline when content is editable */
+      </style>
+      <meta charset="UTF-8">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&amp;display=swap"
+            data-tag="font" />
+      <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+            data-tag="font" />
+      <link rel="stylesheet" href="./css/styleHistory.css">
+      <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+      
+
+
+      <!-- Open Sans Font -->
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+      <!-- FontAweSome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+      <!-- jquery -->
+      <script src="https://code.jquery.com/jquery-3.7.0.js"
+            integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+      <!-- Bootstrap -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+      <!-- Styles.css -->
+      <!-- Tiny ediotr -->
+      <script src="https://cdn.tiny.cloud/1/czhzadznx3qb12g2i4971xbviqsshfv65cbyuvs95fsi5021/tinymce/6/tinymce.min.js"
+            referrerpolicy="origin"></script>
+      <script src="https://cdn.tiny.cloud/1/czhzadznx3qb12g2i4971xbviqsshfv65cbyuvs95fsi5021/tinymce/6/tinymce.min.js"
+            referrerpolicy="origin"></script>
+            <%- include("./partials/head") -%>
+            <link rel="stylesheet" href="/css/styleFix.css">
+</head>
+
+<body>
+    <div style="z-index: 0;">
+        <%- include("./partials/navigation") -%>
+    </div>
+      <button class="btn btn-dark back-to-top" onclick="scrollToTop()">
+            <i class="fas fa-angle-double-up"></i>
+      </button>
+      <div class="history">
+
+
+            <button class="btn btn-danger  fixedd-button" onclick="deleteAllFrames(<%= matchedBooks.length %>)">Xóa lịch sử</button>
+            
+            <div class="all-his">
+
+                  <div class="page-top-group">
+                        <a href="/">
+                              <!-- Này để chuyển qua trang chủ khi click vào bìa -->
+                              <div class="index-background d-none d-lg-block">
+                                    <img src="./Image/BiaWeb.png">
+                              </div>
+
+                        </a>
+                  </div>
+
+
+                  <main id="mainpart" class="user-page ">
+                        <div class="container test">
+                              <div class="row d-block clearfix ">
+                                    <!-- Navigator board -->
+                                    <div class="col-12 col-lg-3 float-right navigator-board-all">
+                                          <section class="private-tabs ">
+                                                <header>
+                                                      <h4 class="section-name">Tài khoản</h4>
+                                                      <span class="user-name">Chủ nô</span>
+                                                </header>
+                                                <ul class="user-private-tabs ">
+                                                      <!-- Chèn link ở khu vực href -->
+                                                      <li class="navigator-board-font "><a href="/bookmark"
+                                                                  style="color: #585858"><span class="none inline-l "><i
+                                                                              class="fas fa-chevron-left"></i></span><span
+                                                                        class="float-right none-l "><i
+                                                                              class="fas fa-chevron-down "></i></span>Bookmark</a>
+                                                      </li>
+                                                      <!-- Chữ Current cho nơi nào đó đang ở -->
+                                                      <li class="current navigator-board-font"><a href="/readinghistory"><span
+                                                                        class="none inline-l"><i
+                                                                              class="fas fa-chevron-left"></i></span><span
+                                                                        class="float-right none-l"><i
+                                                                              class="fas fa-chevron-down"></i></span>Lịch
+                                                                  sử</a></li>
+                                                      <li class="navigator-board-font"><a href="/notification"
+                                                                  style="color: #585858"><span class="none inline-l"><i
+                                                                              class="fas fa-chevron-left"></i></span><span
+                                                                        class="float-right none-l"><i
+                                                                              class="fas fa-chevron-down"></i></span>Thông
+                                                                  báo
+                                                                  cá nhân</a></li>
+                                                      <!-- Nơi này của ADMIN -->
+                                                      <% if(user.permission != 0){%>
+                                                      <li class="navigator-board-font"><a href="/manageUser"
+                                                                  style="color: #585858"><span class="none inline-l"><i
+                                                                              class="fas fa-chevron-left"></i></span><span
+                                                                        class="float-right none-l"><i
+                                                                              class="fas fa-chevron-down"></i></span>Quản
+                                                                  lý
+                                                                  User</a></li>
+                                                      <li class="navigator-board-font"><a href="/manageComment"
+                                                                  style="color: #585858"><span class="none inline-l"><i
+                                                                              class="fas fa-chevron-left"></i></span><span
+                                                                        class="float-right none-l"><i
+                                                                              class="fas fa-chevron-down"></i></span>Quản
+                                                                  lý
+                                                                  Comment</a></li>
+                                                                  <%}%>
+                                                </ul>
+                                          </section>
+                                          <!-- End of Navigator board -->
+                                    </div>
+                                    <!-- Khu vực truyện đã đọc -->
+                                    <div class="test2">
+                                          <header class="page-title">
+                                                <div class="page-name_wrapper">
+                                                      <div class="container">
+                                                            <span class="page-name"><i class="fas fa-circle"></i>Truyện
+                                                                  đã
+                                                                  đọc</span>
+                                                      </div>
+                                                </div>
+                                          </header>
+
+                                          <div style="text-align: center; margin: 0 auto 10px auto;">
+                                          </div>
+                                          <% function truncateTitle(title, maxTitleLength) { %>
+                                            <% if (title.length> maxTitleLength) { %>
+                                                <%= title.slice(0, maxTitleLength) + '...' %>
+                                                    <% } else { %>
+                                                        <%= title %>
+                                                            <% } %>
+                                                                <% } %>
+
+                                            <% function getChapterName(latestChapterID, volumeID, bookID) { %>
+                                            <% const chap = chapters.find(chap =>
+                                                chap.bookID === bookID && chap.volID === volumeID && chap.chapID === parseInt(latestChapterID, 10)
+                                            );
+
+                                            if (chap) {
+                                                return chap.chapName;
+                                            } else {
+                                                console.log('Chap not found');
+                                                return 'Chương đã đọc';
+                                            }
+                                            } %>
+
+                                            <% function getChapterID(latestChapterID, volumeID, bookID) { %>
+                                            <% const chap = chapters.find(chap =>
+                                                chap.bookID === bookID && chap.volID === volumeID && chap.chapID === parseInt(latestChapterID, 10)
+                                            );
+
+                                            if (chap) {
+                                                const decodedId = decodeURIComponent(chap._id); // Decode URL-encoded string
+                                                const cleanedId = decodedId.replace(/\s+/g, ''); // Remove all spaces                        
+                                                return cleanedId;
+                                            } 
+                                            } %>
+
+                                            <% function getVolName(latestChapterID, volumeID, bookID) { %>
+                                                <% const vol = volumes.find(vol =>
+                                                    vol.bookID === bookID && vol.volID === volumeID
+                                                );
+    
+                                                if (vol) {
+                                                    return vol.volName;
+                                                } else {
+                                                    console.log('Vol not found');
+                                                    return 'Volume đã đọc';
+                                                }
+                                                } %>
+                                          <div class="container ">
+                                                <section class="browse-section">
+                                                    <main class="sect-body row">
+                                                      
+                                                        <% matchedBooks.forEach((book, index) => { %>
+                                                            <% if(book.status!=3){%>
+                                                          <% const azureBlobBaseUrl = 'https://happinovel2021.blob.core.windows.net/bookcover'; %>
+                                                          <% const fullImageUrl = `${azureBlobBaseUrl}/${book.coverImg}`; %>
+                                                          <div class="thumb-item-flow col-5 col-md-2 col-lg-3 type-original" id="frame<%= index + 1 %>"  data-chap_id="<%=BookMId[index]._id%>">
+                                                            <div class="thumb-wrapper ln-tooltip">
+                                                              <a href="/book/<%= book.bookID %>" title="<%= book.title %>">
+                                                                <div class="a6-ratio">
+                                                                  <div class="content img-in-ratio lazyloaded" data-bg="">
+                                                                    <img src="<%= fullImageUrl %>">
+                                                                  </div>
+                                                                </div>
+                                                              </a>
+                                                              <div class="thumb-detail">
+                                                                <div class="thumb_attr chapter-title" title="NoneC">
+                                                                  <% const userHistory = BookMId.find(history => history.bookID === book.bookID); %>                                                                  
+                                                                  <% if (userHistory) { %>
+                                                                        <% const chapid = getChapterID(userHistory.chapID, userHistory.volID, book.bookID) %>
+                                                                        <a href="/book/<%= book.bookID %>/<%= chapid %>"title="<%= getChapterName(userHistory.chapID, userHistory.volID, book.bookID)  %>" >
+                                                                      
+                                                                      <%= getChapterName(userHistory.chapID, userHistory.volID, book.bookID)  %>
+                                                                    </a>
+                                                                  <% } else { %>
+                                                                    <a href="#" title="Chap not found">N/A</a>
+                                                                  <% } %>
+                                                                </div>
+                                                                <div class="thumb_attr volume-title"><%= getVolName(userHistory.chapID, userHistory.volID, book.bookID)  %></div>
+                                                                <div class="thumb_title text-center pad-top-10" onclick="deleteFrame('frame<%= index + 1 %>')" style="cursor: pointer">
+                                                                  <i class="fas fa-times"></i> Xóa
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                            <div class="thumb_attr series-title">
+                                                              <a href="/book/<%= book.bookID %>" style="color: rgb(0, 0, 0);" title="<%= book.title %>"><%= truncateTitle(book.title, 30) %></a>
+                                                            </div>
+                                                          </div>
+                                                          <% } %>
+                                                        <% }) %>
+                                                        
+                                                      </main>
+                                                      
+                                                      
+                                                      
+                                                      
+                                                </section>
+                                          </div>
+                                    </div>
+
+                              </div>
+
+                        </div>
+
+
+
+
+                  </main>
+            </div>
+      </div>
+
+      <footer class="mt-3" id="footer">
+            <div class="container text-center">
+                  <div class="row align-items-center">
+                        <div class="col-md-6">
+                              <span>© 2023 - HappiNovel</span>
+                        </div>
+                        <div class="col-md-6">
+                              <span>Liên hệ: <a href="">contact@slavesteam.vn</a></span>
+                        </div>
+                  </div>
+            </div>
+      </footer>
+      <script>
+            // Function to delete the frame and rearrange remaining frames
+            async function deleteFrame(frameId) {
+  // Get the frame element by its ID
+  var frame = document.getElementById(frameId);
+  const chap_id = frame.getAttribute('data-chap_id');
+  console.log(chap_id);
+  try {
+    const res = await fetch(`/readinghistory/delete`, {
+      method: 'DELETE', // Use DELETE method here
+      body: JSON.stringify({ chap_id }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    const data = await res.json();
+    console.log(data);
+  } catch (err) {
+    console.log(err);
+  }
+  if (frame) {
+    frame.remove();
+  }
+}
+
+            function deleteAllFrames(n) {
+                  console.log(n);
+                  for(let i=1;i<=n;i++){
+                  // Get all frame elements with class "frame"
+                  frameId = 'frame'+i;
+                  console.log(frameId);
+                  deleteFrame(frameId)
+                  
+                  }
+            }
+      </script>
+      <script>
+            // Function to scroll to the top of the page smoothly
+            function scrollToTop() {
+                  window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                  });
+            }
+
+            // Show the back-to-top button when the user scrolls down
+            window.addEventListener('scroll', function () {
+                  var button = document.querySelector('.back-to-top');
+                  if (window.scrollY > 300) {
+                        button.style.display = 'block';
+                  } else {
+                        button.style.display = 'none';
+                  }
+            });
+      </script>
+
+</body>
+
+</html>

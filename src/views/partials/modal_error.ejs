@@ -1,0 +1,29 @@
+</div>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog " style="width: 340px; height: 400px;">
+    <div class="modal-content " style="background-color: #ECECEC;" >
+      <div class="modal-body text-center"><br>
+      <i class="fa-solid fa-circle-xmark" style="color: #dd0b0c;font-size: 60px;"></i><br><br>
+          <strong id="modalText" style="display: block; font-size: 28px;color: #DD0B0C;  ">
+            ...
+            </strong>
+          <br><br><br><br><br><br>
+          
+      </div>
+      <div >
+        <button id="modalerror1" type="button" class="btn btn-dark custom-btn-width text-light"
+                style="background-color: #DD0B0C;border: none;background: linear-gradient(to right top, #b71c24, #c41c3c, #cf2154, #d72c6d, #db3a86); 
+                width: 100%; height: 100%;font-size: 25px;border-top-left-radius: 0px; border-top-right-radius: 0px;" data-bs-dismiss="modal"><strong>Trở về</strong></button>
+    
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function attachModal(content){
+        document.getElementById("modalText").innerHTML = content;
+      $("#staticBackdrop").modal('show');
+    }
+  </script>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+  <!-- <title>Trang chủ - Cổng đọc truyện số 1 Việt Nam</title> -->
+  <title>Duyệt sách</title>
+  <%- include("./partials/head") -%>
+    
+    
+</head>
+<body>
+    <!-- Navigator bar -->
+    <%- include("./partials/navigation2") -%>
+    <%- include("./partials/coverImg") -%>
+    <div class="container border rounded p-3" style="margin-bottom: 50px;">
+    <!-- Tiêu đề -->
+    <h2><i class="fa-solid fa-book"></i> <strong> Duyệt sách</strong></h2>
+      <div class="row">
+      <div class="col-md-4 mt-2  d-flex align-items-center ">
+        <div class="input-group "  style="max-width: 260px;"  >
+          <span class="input-group-text" id="search-icon" style="background-color: #D9D9D9;"><i class="fa-solid fa-magnifying-glass"></i></span>
+          <input type="text" class="form-control" style="background-color: #D9D9D9;" 
+                 id="search-input" placeholder="Tìm kiếm theo tên,id,etc.">
+        </div>
+      </div>
+      <div class="col-md-2 mt-2  d-flex align-items-center">
+          <span class="me-3">
+          <!-- Thêm biểu tượng vào đây, ví dụ: Font Awesome icon -->
+          <i class="fa-solid fa-filter"></i>
+          </span>
+          <select id="filter-select" class="form-select" style="max-width: 110px;background-color: #D9D9D9;">
+                    <option>Tất cả</option>
+                    <option> Thêm</option>
+                    <option> Sửa </option>
+                    </select>
+      </div>
+      <div class="col-md-3 mt-2 d-flex align-items-center ">
+        <button id = "button-pass" class="btn btn-outline " style="background-color: #D9D9D9; margin-left: 40px;">Đồng ý </button>
+      </div>
+      <div class="col-md-3 mt-2 d-flex align-items-center">
+        <button id = "button-reject" class="btn btn-outline " style="background-color: #D9D9D9;">Từ chối</button>
+        
+      <!-- </div>
+      <div class="col-md-2 mt-4 d-flex justify-content-center">
+      
+         <ul class="pagination ">
+            <li >
+          <div class="btn btn-outline btn-lg btn-text">1 of 7</div>
+          </li>
+           <li >
+          <a href="#" aria-label="Trang trước" class="btn btn-outline btn-lg">
+          <i class="fas fa-chevron-left"></i>
+          </a>
+          </li>
+           
+          <li class="page-item">
+            <a href="#" aria-label="Trang sau" class="btn btn-outline btn-lg">
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </li>
+          </ul>
+        </div>-->
+      </div> 
+      
+      <!-- Bảng -->
+        
+  <div class="table-responsive mt-2">
+    <table class="table table-hover table-borderless ">
+      <thead>
+        <tr>
+          <th class="border-bottom " >
+            <input type="checkbox" id="checkAll">
+          </th>
+          <th class="border-bottom" >STT <i class="fa-solid fa-sort"></i> </th>
+          <th class="border-bottom" >Username <i class="fa-solid fa-sort"></i> </th>
+          <th class="border-bottom" >Tên sách <i class="fa-solid fa-sort"></i></th>
+          <th class="border-bottom text-center" >Volume <i class="fa-solid fa-sort"></i></th>
+          <th class="border-bottom text-center" >Chương <i class="fa-solid fa-sort"></i></th>
+          <th class="border-bottom" >Tác giả <i class="fa-solid fa-sort"></i></th>
+          <th class="border-bottom " >Yêu cầu <i class="fa-solid fa-sort"></i></th>
+          <th class="border-bottom text-center"  >Tình trạng <i class="fa-solid fa-sort"></i></th>
+        </tr>
+      </thead>
+      <tbody id="bookTableBody">
+        <% let count = 1; %>
+        <% let combinedList = [...Books, ...Pendings]; %>
+        <% combinedList.forEach((item) => { %>
+      <tr onclick="openBookPage('<%= item.bookID %>');">
+      <td>
+          <input type="checkbox" data-bookID="<%= item.bookID %>" data-isPending="<%= item.isPending %>"
+          <% if (item.chapID) { %>
+            data-chapID="<%= item.chapID %>"
+          <% } else { %>
+            data-chapID=""
+          <% } %>
+          
+          <% if (item.volID) { %>
+            data-volID="<%= item.volID %>"
+          <% } else { %>
+            data-volID=""
+          <% } %>
+          
+          <% if (item.contentfile) { %>
+            data-contentfile="<%= item.contentfile %>"
+          <% } else { %>
+            data-volID=""
+          <% } %>
+          <% if (item.updatefile) { %>
+            data-updatefile="<%= item.updatefile %>"
+          <% } else { %>
+            data-updatefile=""
+          <% } %>
+          <% if (item.bookPending) { %>
+            data-bookPending="<%= item.bookPending %>"
+          <% } else { %>
+            data-bookPending=""
+          <% } %>
+            >
+      </td>
+      <td><%= count %></td>
+      <td><%= item.username %></td>
+      <td>
+        <% let displayedTitle = item.title || item.bookTitle; %>
+        <% const maxTitleLength = 30; %>
+        <% displayedTitle = displayedTitle && displayedTitle.length > maxTitleLength ? displayedTitle.slice(0, maxTitleLength) + "..." : displayedTitle; %>
+        <%= displayedTitle %>
+      </td>
+      <td class="text-center"><%= item.volID || '' %></td>
+      <td class="text-center"><%= item.chapID || '' %></td>
+      <td><%= item.authorName || item.bookauthor %></td>
+      <td>
+        <% if (item.isPending === 1) { %>
+          <span>Thêm</span>
+        <% } else if (item.isPending === 2) { %>
+          <span>Sửa</span>
+        <% } else { %>
+          <span></span>
+        <% } %>
+      </td>
+      <td class="d-flex justify-content-center">
+        <%  if (item.isPending === 1 || item.isPending === 2) { %>
+          <span class="p-1 rounded" style="background-color: #FDE9B5;">Pending</span>
+        <% } else { %>
+          <span class="p-1 rounded" style="background-color: #FF6767;">Unknown</span>
+        <% } %>
+      </td>
+    </tr>
+    <% count++; %>
+    <% }) %>
+        
+      </tbody>
+    </table>
+  </div>
+
+    </div> 
+
+    <%- include("./partials/modal_error") -%>
+    
+    <%- include("./partials/modal_done") -%>
+      <!-- Dòng container với 6 cột -->
+    
+      
+    
+      
+  </body>    
+    
+<style>
+  .btn-text {
+    cursor: default; /* Không thay đổi con trỏ chuột khi di chuột vào */
+    pointer-events: none; /* Vô hiệu hóa sự kiện chuột cho thẻ */
+    color: #6c757d; /* Màu chữ khi vô hiệu hóa */
+    text-decoration: none; /* Bỏ gạch chân */
+  }
+</style>
+<style>
+  .p-1 {
+    width: 90px; /* Đặt chiều rộng cố định cho các khung */
+    text-align: center; /* Căn giữa nội dung trong khung */
+  }
+</style>
+<script>
+  function setFixedColumnWidths() {
+    const table = document.querySelector(".table");
+    const headerCells = table.querySelectorAll("thead th");
+    const dataRows = table.querySelectorAll("tbody tr");
+
+    headerCells.forEach((headerCell, index) => {
+      const width = getComputedStyle(headerCell).width;
+      dataRows.forEach((dataRow) => {
+        const cell = dataRow.querySelectorAll("td")[index];
+        cell.style.width = width;
+      });
+    });
+  }
+
+  // Gọi hàm setFixedColumnWidths() khi trang được tải
+  window.addEventListener("load", setFixedColumnWidths);
+</script>
+<script>
+function openBookPage(bookID) {
+  const target = event.target;
+  if (target.tagName.toLowerCase() !== 'input') {
+    const newURL = '/managePending/' + bookID;
+    window.open(newURL, '_blank');
+      }
+    }
+</script>
+<script>
+  function getStatusFromText(statusText) {
+    const lowerCaseStatus = statusText.toLowerCase();
+    if (lowerCaseStatus.includes("thêm")) {
+      return "Thêm";
+    } else if (lowerCaseStatus.includes("sửa")) {
+      return "Sửa";
+    } else {
+      return "Unknown";
+    }
+  }
+  function removeAccentsAndLowerCase(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  }
+
+  const searchInput = document.getElementById("search-input");
+  const filterSelect = document.getElementById("filter-select");
+  const tableRows = document.querySelectorAll("tbody tr");
+
+  function filterRows() {
+    const searchTerm = removeAccentsAndLowerCase(searchInput.value);
+    const selectedFilter = filterSelect.value;
+
+    tableRows.forEach((row) => {
+      const username = removeAccentsAndLowerCase(row.querySelector("td:nth-child(3)").textContent);
+      const bookname = removeAccentsAndLowerCase(row.querySelector("td:nth-child(4)").textContent);
+
+      const titleMatch = username.includes(searchTerm);
+      const authorMatch = bookname.includes(searchTerm);
+
+      // Lấy giá trị book.status từ cột thứ 8 (td:nth-child(8))
+      const status = row.querySelector("td:nth-child(8)").textContent;
+
+      // Kiểm tra trạng thái 'stopped'
+      const statusValue = getStatusFromText(status);
+
+      const statusMatch = (selectedFilter === "Tất cả") ||
+        (statusValue === selectedFilter);
+
+      if ((titleMatch || authorMatch) && statusMatch) {
+        row.style.display = "table-row";
+      } else {
+        row.style.display = "none";
+      }
+    });
+  }
+
+  searchInput.addEventListener("keyup", filterRows);
+  filterSelect.addEventListener("change", filterRows);
+</script>
+<script>
+  document.getElementById("button-pass").addEventListener("click",async function() {
+    const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+    // Tạo một mảng chứa các bookID đã chọn
+    const selectedIDs = [];
+    checkboxes.forEach((checkbox) => {
+      selectedIDs.push({
+        bookID: checkbox.getAttribute("data-bookID"),
+        chapID: checkbox.getAttribute("data-chapID"),
+        volID: checkbox.getAttribute("data-volID"),
+        isPending: checkbox.getAttribute("data-isPending"),
+        bookPending: checkbox.getAttribute("data-bookPending"),
+        contentfile: checkbox.getAttribute("data-contentfile"),
+        updatefile: checkbox.getAttribute("data-updatefile"),
+      });
+    });
+    
+    // Gửi dữ liệu lên server bằng 
+    const allArePending = selectedIDs.length > 0 && selectedIDs.every(item => {
+      if (item.chapID !== "") {
+        return item.bookPending === "" ;
+      } else {
+        return true; // Không kiểm tra nếu chapID trống
+      }
+    });
+    
+    if (allArePending ) {
+      try {
+        const response = await fetch("/pending-pass", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ selectedIDs }),
+        });
+        const result = await response.text();
+        if (result === "Done") {
+          // Nếu kết quả là "Done", hiển thị thông báo thành công
+          attachModal2("Cập nhật thành công!");
+          var modalConfirm2 = function () {
+            $("#modaldone1").on("click", function () {
+              location.assign('/managePending');
+              $("#staticBackdrop2").modal('hide');
+            });
+          };
+          await modalConfirm2()
+         } else {
+          // Nếu không đủ điều kiện, hiển thị thông báo lỗi
+                attachModal("Đã có lỗi xảy ra!1")
+                // $("#modal2btn").modal('show');
+                var modalConfirm = function(){
+                  $("#modalerror1").on("click", function(){
+                    location.assign('/managePending')
+                    //res.redirect('/manage');
+                    $("#staticBackdrop").modal('hide');
+                  });
+                  
+                };
+                await modalConfirm()
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      // Nếu không đủ điều kiện, hiển thị thông báo lỗi
+            attachModal("Vui lòng kiểm tra lại!")
+            var modalConfirm = function(){
+              $("#modalerror1").on("click", function(){
+                location.assign('/managePending')
+                $("#staticBackdrop").modal('hide');
+              });
+            };
+            await modalConfirm()
+    }
+  });
+</script>
+<script>
+  const checkAllButton = document.getElementById("checkAll");
+  const checkboxes = document.querySelectorAll("input[type=checkbox][data-bookID]");
+
+  // Bắt sự kiện khi click vào nút "Check All"
+  checkAllButton.addEventListener("click", function() {
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = checkAllButton.checked;
+    });
+  });
+
+  // Bắt sự kiện khi click vào một checkbox bất kỳ trong danh sách
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", function() {
+      // Kiểm tra nếu có bất kỳ checkbox nào không được check thì không chọn "Check All"
+      checkAllButton.checked = checkboxes.length === document.querySelectorAll("input[type=checkbox][data-bookID]:checked").length;
+    });
+  });
+  
+  
+  document.getElementById("button-reject").addEventListener("click", async function() {
+    // Lấy danh sách các checkbox đã chọn
+    const checkboxes = document.querySelectorAll("input[type=checkbox]:checked");
+
+    // Tạo một mảng chứa các bookID đã chọnselectedIDs
+    const selectedIDs = [];
+    checkboxes.forEach((checkbox) => {
+      selectedIDs.push({
+        bookID: checkbox.getAttribute("data-bookID"),
+        chapID: checkbox.getAttribute("data-chapID"),
+        volID: checkbox.getAttribute("data-volID"),
+        isPending: checkbox.getAttribute("data-isPending"),
+        bookPending: checkbox.getAttribute("data-bookPending"),
+        contentfile: checkbox.getAttribute("data-contentfile"),
+        updatefile: checkbox.getAttribute("data-updatefile"),
+      });
+    });
+    
+    // Gửi dữ liệu lên server bằng AJAX
+    const allArePending = selectedIDs.length > 0 &&
+    selectedIDs.every((id) => {
+    // Nếu chapID rỗng và không có phần tử nào khác có cùng bookID
+    if (id.chapID === "") {
+      return !selectedIDs.some((otherID) => otherID !== id && otherID.bookID === id.bookID);
+    }
+    // Nếu chapID không rỗng và không có phần tử nào khác có cùng bookID và chapID rỗng
+    else {
+      return !selectedIDs.some((otherID) => otherID !== id && otherID.bookID === id.bookID && otherID.chapID === "");
+    }
+  });
+
+    if (allArePending) {
+      try {
+        const response = await fetch("/delete-pendings", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ selectedIDs }),
+        });
+  
+        const result = await response.text();
+        if (result === "Done") {
+          // Nếu kết quả là "Done", hiển thị thông báo thành công
+          attachModal2("Cập nhật thành công!");
+          var modalConfirm22 = function () {
+            $("#modaldone1").on("click", function () {
+              location.assign('/managePending');
+              $("#staticBackdrop2").modal('hide');
+            });
+          };
+          await modalConfirm22()
+         } else {
+          // Nếu không đủ điều kiện, hiển thị thông báo lỗi
+                attachModal("Đã có lỗi xảy ra!")
+                // $("#modal2btn").modal('show');
+                var modalConfirm = function(){
+                  $("#modalerror1").on("click", function(){
+                    location.assign('/managePending')
+                    //res.redirect('/manage');
+                    $("#staticBackdrop").modal('hide');
+                  });
+                  
+                };
+                await modalConfirm()
+                
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      // Nếu không đủ điều kiện, hiển thị thông báo lỗi
+            attachModal("Vui lòng kiểm tra lại!")
+            // $("#modal2btn").modal('show');
+            var modalConfirm3 = function(){
+              $("#modalerror1").on("click", function(){
+                location.assign('/managePending')
+                //res.redirect('/manage');
+                $("#staticBackdrop").modal('hide');
+              });
+              
+            };
+            await modalConfirm3()
+           
+    }
+
+  });
+</script>
+    <!-- Footer -->
+    <div class = "row" style = "margin-top:70px"></div>
+   <%- include("./partials/footer") -%> 
+
+
+</html>
+

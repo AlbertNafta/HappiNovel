@@ -1,0 +1,215 @@
+
+<form id="form6" style="display: none;">
+    <div class="d-flex justify-content-center rounded-2 section-title" style="margin-bottom: 20px;">
+        <span><i class="fa-solid fa-book-open"></i>  THÔNG TIN TẬP</span>
+    </div>
+
+    <input type="hidden" id="chapObjID" name="chapObjID">
+    <!-- Tên sách -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tên sách <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="Tên sách" name="title" disabled>
+        </div>
+    </div>
+
+    <!-- Tác giả -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tác giả <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="Tên tác giả" name="author" disabled>
+        </div>
+    </div>
+
+    <!-- Tên tập -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tên tập <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="Tên tập" name="volName" disabled>
+        </div>
+    </div>
+
+    <!-- Tên chương -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tên chương <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="Tên chương" name="chapName" required pattern="\S(.*\S)?" title="This field is required">
+        </div>
+    </div>
+
+    <!-- Nội dung chương -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end mt-2">
+            <b>Nội dung <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <textarea id="content2" name="content">Welcome to HappiNovel!</textarea>
+            <script>
+                tinymce.init({
+                    selector: 'textarea#content2'
+                });
+            </script>            
+        </div>
+    </div>
+
+    <div class="row mb-3 me-3">
+        <div class="col-md-8" >
+            <button id="review" class="btn btn-info float-end" hidden><b>Nội dung đang chờ duyệt</b></button>
+        </div>
+        <div class="col-md-2 float-end">
+            <button class="btn btn-danger float-end" value="delete"><b>Xoá chương</b></button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success" value="update"><b>Cập nhật</b></button>
+        </div>
+    </div>
+
+        
+</form>
+<script>
+    var chapData
+    const chapList = document.querySelectorAll(".bg-chap")
+    for (let i = 0; i < chapList.length; i++) {
+        const chap = chapList[i]
+        chap.addEventListener('click', async function(e) {
+            chapID = chap.attributes[2].nodeValue
+            try {
+                const res = await fetch('/upload/reviewChapter', {
+                    method: 'post',
+                    body: JSON.stringify({chapID}),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                let data = await res.json()
+                // console.log(data)
+                var bookData = data.book[0]
+                var volData = data.vol[0]
+                chapData = data.chap
+                form6.querySelector('[name="chapObjID"]').setAttribute("value", chapData._id)
+                form6.querySelector('[name="title"]').setAttribute("value", bookData.title)
+                form6.querySelector('[name="author"]').setAttribute("value", bookData.authorName)
+                form6.querySelector('[name="volName"]').setAttribute("value", volData.volName)
+                form6.querySelector('[name="chapName"]').setAttribute("value", chapData.chapName)
+                tinymce.get('content2').setContent(chapData.contentfile);
+                if (chapData.isPending == 2) 
+                    form6.querySelector('#review').hidden = false;
+                else 
+                form6.querySelector('#review').hidden = true;
+                showContent("form6")
+            }
+            catch (err) {
+                console.log(err)
+            }
+        })
+    }
+</script>
+
+<script>
+    form6 = document.querySelector("#form6")
+    form6.addEventListener('submit', async function(e) {
+        e.preventDefault()
+        var clickedButtonValue = event.submitter.getAttribute('value');
+        if (clickedButtonValue == 'update') {
+            const chapObjID= form6.chapObjID.value
+            const chapName = form6.chapName.value
+            const chapContent = tinymce.get('content2').getContent()
+            checked = tinymce.get('content2').getContent({format: 'text'})
+            if(checked.trim() === '') {
+                alert("Vui lòng nhập nội dung tóm tắt")
+                return false
+            }
+            
+            try {
+            const res = await fetch('/upload/updateChapter', {
+                method: 'post',
+                body: JSON.stringify({chapObjID, chapName, chapContent}),
+                    headers: {'Content-Type': 'application/json'}
+            });
+            const data = await res.json()
+
+            //   console.log(tinymce.get('summary').getContent())
+            attachModal("Cập nhật thông tin chuơng thành công, vui lòng chờ kiểm duyệt.")
+                var modalConfirm = function(){
+                    $("#modalbtn1").on("click", function(){
+                        location.reload()
+                        $("#modal2btn").modal('hide');
+                    });
+                    
+                    $("#modalbtn2").on("click", function(){
+                        location.reload()
+                        $("#modal2btn").modal('hide');
+                    });
+                };
+                await modalConfirm()
+            }
+            catch (err) {
+                console.log(err);
+            } 
+        } else if (clickedButtonValue === 'delete') {
+            attachModal("Bạn chắc chắn muốn xoá chương này chứ?.")
+            var modalConfirm = function(){
+                $("#modalbtn1").on("click", function(){
+                    location.reload()
+                    $("#modal2btn").modal('hide');
+                });
+                
+                $("#modalbtn2").on("click", async function(){
+                    $("#modal2btn").modal('hide');
+                    const chapObjID= form6.chapObjID.value
+                    try {
+                        const res = await fetch('/upload/deleteChapter', {
+                            method: 'post',
+                            body: JSON.stringify({chapObjID}),
+                                headers: {'Content-Type': 'application/json'}
+                        });
+                        const data = await res.json()
+
+                        //   console.log(tinymce.get('summary').getContent())
+                        attachModal("Xoá chương thành công.")
+                        var modalConfirm = function(){
+                            $("#modalbtn1").on("click", function(){
+                                location.reload()
+                                $("#modal2btn").modal('hide');
+                            });
+                            
+                            $("#modalbtn2").on("click", function(){
+                                location.reload()
+                                $("#modal2btn").modal('hide');
+                            });
+                        };
+                        await modalConfirm()
+                    }
+                    catch (err) {
+                        console.log(err);
+                    }
+                });
+            };
+            await modalConfirm()  
+        }
+    })
+</script>
+
+<script>
+    button = form6.querySelector("#review")
+    check = true
+    button.addEventListener('click', function(e) {
+        e.preventDefault()
+        if (check) {
+            button.innerHTML = "<b>Quay lại</b>"
+            tinymce.get('content2').setContent(chapData.updatefile);
+            check = false
+        }
+        else {
+            button.innerHTML = "<b>Nội dung đang chờ duyệt</b>"
+            tinymce.get('content2').setContent(chapData.contentfile);
+            check = true
+        }
+    })
+</script>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head> 
+	<title><%=book.title%></title>
+    <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+	<base href="http://localhost:3000/">
+    <%- include("./partials/head") -%>
+	<link rel="stylesheet" href="./css/stylesBookInfo.css">
+</head>
+<body>
+
+	<%- include("./partials/navigation") -%>
+    
+    <%- include("./partials/coverImg") -%>
+	<!-- Book Info -->
+	<div class="container ">
+		<div class="row clearfix">
+			<!-- First Section -->
+			<div class="col-12 col-lg-9 float-left border rounded-2 " style="background-color: white;">
+				<div class="d-flex flex-column" style="min-height: 0;">
+					<div class="row mt-3 mb-2">
+						<div class="col-md-auto">
+							<img src="<%=book.coverImg%>" class="img-fluid rounded-2" alt="Book Cover" style="max-width: 300px; max-height: 300px;">
+						</div>                    
+						<div class="col-md">
+							<div class="row">
+								<h2><b><%= book.title %></b></h2>
+							</div>
+							<div class="row">
+								<div class="mb-2">
+									<% genresOfBook.forEach(genre => { %>
+										<a href="/filter?genre=<%=genre.genreID%>" class="linkHref">
+											<button type="button" id="genreButton" class="btn btn-sm btn-secondary mb-1 rounded-5"><%= genre.genreName %></button>
+										</a>
+									<% }) %>
+								</div>
+							</div>
+							
+							<div class="row">
+								<span>
+									<b>
+										Tác giả:
+									</b> <%= book.authorName %></p>
+								</span>
+							</div>
+
+							<div class="row">
+								<span>
+									<b>Tình trạng:</b> 
+									<% if (book.status === 0) { %>
+										Tạm ngưng
+									<% } else if (book.status === 1) { %>
+										Đang tiến hành 
+									<% } else if (book.status === 2) { %>
+										Hoàn thành 
+									<% } %>
+								</span>
+							</div>
+							
+							
+							<div class="row mt-5">
+								
+								<div id="followbtn" class="col-4 col-md text-center function-item">
+									<a>
+										<label>
+											<span class="row d-block"><i class="far fa-heart fa-2xl" style="color: #e22590"></i></span>
+											<span class="row icon-text">Theo dõi</span>
+										</label>
+									</a>
+								</div>
+
+								<div id="ratingButton" class="col-4 col-md text-center function-item">
+									<a href="">
+										<label>
+											<div class="star-rating displayNone">
+												<input type="radio" id="5-stars" name="rating" value="5" />
+												<label for="5-stars" class="star">&#9733;</label>
+												<input type="radio" id="4-stars" name="rating" value="4" />
+												<label for="4-stars" class="star">&#9733;</label>
+												<input type="radio" id="3-stars" name="rating" value="3" />
+												<label for="3-stars" class="star">&#9733;</label>
+												<input type="radio" id="2-stars" name="rating" value="2" />
+												<label for="2-stars" class="star">&#9733;</label>
+												<input type="radio" id="1-star" name="rating" value="1" />
+												<label for="1-star" class="star">&#9733;</label>
+											</div>
+											<div class="rating-title displayBlock">
+												<span class="row d-block"><i class="far fa-star fa-2xl" style="color: #f5ab00;"></i></span>
+												<span class="row icon-text">Đánh giá</span>
+											</div>
+										</label>
+									</a>
+								</div>
+
+								<div class="col-4 col-md text-center function-item">
+									<a href="#contentTable">
+										<label for="" class="">
+											<span class="row d-block"><i class="fas fa-list fa-2xl" style="color: black;"></i></span>
+											<span class="row icon-text">Mục lục</span>
+										</label>
+									</a>
+								</div>
+
+								<div class="col-4 col-md text-center function-item">
+									<a href="#comment-section">
+										<label for="" class="">
+											<span class="row d-block"><i class="fas fa-comments fa-2xl" style="color: black;"></i></span>
+											<span class="row icon-text">Bàn luận</span>
+										</label>
+									</a>
+								</div>
+					
+							</div>						
+						</div>
+						
+					</div>
+					<hr>
+					<div class="row d-flex text-center">
+						<div class="col-3">
+							<div class="row">
+								<span style="color: grey;"><b>Lần cuối</b></span>
+								<%const curDate = new Date()%>
+								<%const timeDif = curDate - chapDate%>
+								<%const minutesAgo = Math.floor(timeDif / (60 * 1000));%>
+								<%const hoursAgo = Math.floor(timeDif / (60 * 60 * 1000));%>
+								<%const daysAgo = Math.floor(timeDif / (24 * 60 * 60 * 1000));%>
+								<% let timeAgo = ''%>
+								<% if (daysAgo > 0) {%>
+									<%timeAgo = `${daysAgo} ngày trước`%>
+								<% } else if (hoursAgo > 0) {%>
+									<% timeAgo = `${hoursAgo} tiếng trước`%>
+								<% } else if (minutesAgo > 0) {%>
+									<% timeAgo = `${minutesAgo} phút trước`%>
+								<% } else {%>
+									<% timeAgo = 'vừa xong'%>
+								<% }%>
+								<% const formattedDateTime = `${timeAgo}`%>
+								<span><b><%=formattedDateTime%></b></span>
+							</div>
+						</div>
+
+						<div class="col-3">
+							<div class="row">
+								<span style="color: grey;"><b>Đánh giá</b></span>
+								<span><b><%=ratingData.ratingScore%></b></span>
+							</div>
+						</div>
+
+						<div class="col-3">
+							<div class="row">
+								<span style="color: grey;"><b>Lượt xem</b></span>
+								<span><b><%=book.totalview.toLocaleString('en-US').replace(/,/g, '.')%></b></span>
+							</div>
+						</div>
+
+						<div class="col-3">
+							<div class="row">
+								<span style="color: grey;"><b>Theo dõi</b></span>
+								<span><b><%=countbookmark.toLocaleString('en-US').replace(/,/g, '.')%></b></span>
+							</div>
+						</div>
+					</div>
+					<hr>
+					<!-- Second Section -->
+					<div class="col-md-12 mb-2 flex-grow-1">
+						<h4><b>Tóm tắt</b></h4>
+						<%- book.summary %>
+					</div>
+				</div>
+			</div>
+			<!-- Sidebar -->
+			<div class="col-12 col-lg-3 float-right rounded-2 mb-3">
+				<div class="card">
+					<div class="card-header text-center" style="border: 1px; background-color: #36a189;">
+						<h5><span><b>Thông Tin Người Đăng</b></span></h5>
+					</div>
+					<div class="card-body row d-flex align-items-center " style="border: 1px;">
+						<div class="col-md-auto ">
+							<img src="<%=author.avatarURL%>" alt="Author Avatar" class="img-fluid rounded-circle" width="60px" height="60px">
+						</div>
+						<div class="col-md-auto ">
+							<h5><span><b><a class="userLink" href="/profile/<%=author.userID%>"><%= author.profileName %></a></b></span></h5>
+						</div>
+					</div>
+				</div>
+
+				<div class="card mt-3">
+					<div class="card-header text-center" style="border: 1px; background-color: #36a189;">
+						<h5><span><b>Chú Thích Thêm</b></span></h5>
+					</div>
+					<div class="card-body row" style="border: 1px;  padding-bottom: 0;">
+						<%- book.note %>
+					</div>
+				</div>
+			</div>
+
+			<div id="contentTable" style="padding: 0;">
+				<% let cntVol = 0%>
+				<% for (let vol of book.volumes) {%>
+					<%cntVol++%>
+					<div class="list-group col-12 col-lg-9 float-left mt-5" >
+						<div class="list-group-item list-group-item-dark" style="color: black">
+							<h5 class="mb-0"><b>Volume <%=cntVol + ": " + vol.volName%></b></h5>
+						</div>
+						<% let cntChap = 0%>
+						<% for (let chap of vol.chapters) {%>
+							<%cntChap++%>
+							<%const date = new Date(chap.publishDate);%>
+							<%const day = date.getDate().toString().padStart(2, '0');%>
+							<%const month = (date.getMonth() + 1).toString().padStart(2, '0');%>
+							<%const year = date.getFullYear().toString();%>
+							<% if (cntChap & 1) { %>
+								<a href="/book/<%=book.bookID%>/<%=chap._id%>" class="list-group-item list-group-item-action list-group-item-light" >Chapter <%=cntChap +": " + chap.chapName%><span class="float-end"><%=`${day}/${month}/${year}`%></span></a>
+							<% } else {%>
+								<a href="/book/<%=book.bookID%>/<%=chap._id%>" class="list-group-item list-group-item-action list-group-item-secondary" >Chapter <%=cntChap +": " + chap.chapName%><span class="float-end"><%=`${day}/${month}/${year}`%></span></a>
+							<%}%>
+						<%}%>
+					</div>
+				<%}%>
+			</div>
+			
+						
+			<div id="comment-section"  class="card col-12 col-lg-9 float-left rounded-2 mt-5 border" style="padding: 0;">
+				<div class="card-header" style="background-color: #ced4da;">
+					<h5 class="mb-0"><b>Bình luận</b></h5>
+				</div>
+				<div class="card-body">
+					<% if (curUser.permission == 3) { %>
+						<span><b>Vui lòng <a href="/login" class="linkHref">đăng nhập</a> để bình luận</b></span>
+					<% } else {%>
+						<div class="container p-0">
+							<form>
+								<label for="comment"><b>Nhập bình luận:</b></label>
+								<textarea id="comment" class="form-control" rows="5" maxlength="500" required></textarea>
+							</form>
+							<button id="cmtSubmit" class="btn btn-success mt-2 float-end rounded-2"  style="width: 75.6px; ">
+								<span><b>Gửi</b></span>
+							</button>
+						</div>
+					<%}%>
+					<div id="commentContainer">
+						<div class="adding-comment">
+
+						</div>
+
+						<% for (let cmt of commentsList) {%>
+							<div class="card container p-0 border-0" id="<%=cmt._id%>">
+								<div class="card-body" style="padding-right: 0px; padding-left: 0px;">				
+									<div class="d-flex flex-start">
+										<img class="rounded-circle shadow-1-strong me-3 bg-white"
+											src="<%= cmt.user.avatarURL%>" alt="avatar" width="60"
+											height="60" />
+										<div class="flex-grow-1 flex-shrink-1 bg-light rounded-2">
+											<div>
+												<div class="d-flex justify-content-between align-items-center" style="padding-left: 16px;">
+													<p class="mb-1">
+														<a class="userLink" href="/profile/<%= cmt.user.userID%>"><span><b><%= cmt.user.profileName%></b></span></a>
+														<%const cmtDate = new Date(cmt.publishDate)%>
+														<%const curDate = new Date()%>
+														<%const timeDif = curDate - cmtDate%>
+														<%const minutesAgo = Math.floor(timeDif / (60 * 1000));%>
+														<%const hoursAgo = Math.floor(timeDif / (60 * 60 * 1000));%>
+														<%const daysAgo = Math.floor(timeDif / (24 * 60 * 60 * 1000));%>
+														<% let timeAgo = ''%>
+														<% if (daysAgo > 0) {%>
+															<%timeAgo = `${daysAgo} ngày trước`%>
+														<% } else if (hoursAgo > 0) {%>
+															<% timeAgo = `${hoursAgo} tiếng trước`%>
+														<% } else if (minutesAgo > 0) {%>
+															<% timeAgo = `${minutesAgo} phút trước`%>
+														<% } else {%>
+															<% timeAgo = 'vừa xong'%>
+														<% }%>
+														<% const day = cmtDate.getDate()%>
+														<% const month = cmtDate.getMonth() + 1%>
+														<% const year = cmtDate.getFullYear()%>
+														<% const formattedDateTime = `${timeAgo} vào ${day}/${month}/${year}`%>
+
+														
+														<span class="small">- <%=formattedDateTime%></span>
+													</p>
+													<% if (curUser.permission < 3) { %>
+														<div class="dropdown">
+															<button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+															<ul class="dropdown-menu" data-cmtID="<%=cmt._id%>" data-userID="<%=cmt.user.userID%>">
+															<% if (curUser.permission != 0 && curUser.userID != cmt.userID) { %>
+																<li><a class="dropdown-item reportcmt">Báo cáo</a></li>
+																<li><a class="dropdown-item delcmt">Xoá bình luận</a></li>
+																<li><a class="dropdown-item banuser">Ban user</a></li>
+															<% } else if (curUser.userID == cmt.userID) {%>
+																<li><a class="dropdown-item delcmt">Xoá bình luận</a></li>
+															<%} else if (curUser.permission == 0 && curUser.userID != cmt.userID) {%>
+																<li><a class="dropdown-item reportcmt">Báo cáo</a></li>
+															<% } %>
+															</ul>
+														</div>
+													<% } %>
+												</div>
+												<div style="padding: 0 16px 0 16px;">
+													<p>
+														<%= cmt.contentfile%>
+													</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						<%}%>
+					</div>
+					
+				</div>
+			</div>
+	    </div>	
+	</div>
+	<%- include("./partials/footer") -%>
+
+	<script src="./js/star.js"></script>
+	
+	<% if (curUser.permission != 3) { %>
+	<script>
+		reportcmt = document.querySelectorAll('.reportcmt')
+		delcmt = document.querySelectorAll('.delcmt')
+		banuser = document.querySelectorAll('.banuser')
+
+		delcmt.forEach(element =>{
+			element.addEventListener('click', async function(e) {
+				parentNode = element.parentNode.parentNode
+				cmtID = parentNode.getAttribute('data-cmtID')
+				// userID = parentNode.getAttribute('data-userID')
+
+				cmtNeedToDel = document.getElementById(`${cmtID}`)
+				cmtNeedToDel.parentNode.removeChild(cmtNeedToDel)
+				path = `/book/<%=book.bookID%>/deleteComment`
+				try {
+					const res = await fetch(path, {
+						method: 'delete',
+						body: JSON.stringify({cmtID}),
+						headers: {'Content-Type': 'application/json'},
+					});
+					ok = await res.json()
+				}
+				catch (err) {
+					console.log(err);
+				}
+				// delcmt = document.querySelectorAll('.delcmt')
+			})
+		})
+
+		reportcmt.forEach(element =>{
+			element.addEventListener('click', async function(e) {
+				parentNode = element.parentNode.parentNode
+				cmtID = parentNode.getAttribute('data-cmtID')
+				// userID = parentNode.getAttribute('data-userID')
+
+				path = `/book/<%=book.bookID%>/reportComment`
+				try {
+					const res = await fetch(path, {
+						method: 'post',
+						body: JSON.stringify({cmtID}),
+						headers: {'Content-Type': 'application/json'},
+					});
+					ok = await res.json()
+				}
+				catch (err) {
+					console.log(err);
+				}
+			})
+		})
+
+		banuser.forEach(element =>{
+			element.addEventListener('click', async function(e) {
+				parentNode = element.parentNode.parentNode
+				cmtID = parentNode.getAttribute('data-cmtID')
+				// userID = parentNode.getAttribute('data-userID')
+
+				path = `/book/<%=book.bookID%>/banUser`
+				try {
+					const res = await fetch(path, {
+						method: 'post',
+						body: JSON.stringify({cmtID}),
+						headers: {'Content-Type': 'application/json'},
+					});
+					ok = await res.json()
+				}
+				catch (err) {
+					console.log(err);
+				}
+			})
+		})
+		
+	</script>
+
+	<script>
+		cmtbtn = document.getElementById('cmtSubmit')
+		cmtbtn.addEventListener('click', async function(e) {
+			commentContent = document.getElementById("comment").value;
+			if (commentContent == '') return;
+
+			document.getElementById("comment").value = ''
+			var newComment = document.createElement('div')
+			addSection = document.querySelector('.adding-comment')
+
+			const path = `/book/<%=book.bookID%>/addComment`
+			const userID = '<%=curUser.userID%>'			
+			var cmtID = ''
+			try {
+				const res = await fetch(path, {
+					method: 'post',
+					body: JSON.stringify({userID, commentContent}),
+					headers: {'Content-Type': 'application/json'},
+				});
+				cmtID = await res.json()
+			}
+			catch (err) {
+				console.log(err);
+			}
+
+			const cmtDate = new Date()
+			const curDate = new Date()
+			const timeDif = curDate - cmtDate
+			const minutesAgo = Math.floor(timeDif / (60 * 1000));
+			const hoursAgo = Math.floor(timeDif / (60 * 60 * 1000));
+			const daysAgo = Math.floor(timeDif / (24 * 60 * 60 * 1000));
+			let timeAgo = ''
+			if (daysAgo > 0) {
+				timeAgo = `${daysAgo} ngày trước`
+			} else if (hoursAgo > 0) {
+				timeAgo = `${hoursAgo} tiếng trước`
+			} else if (minutesAgo > 0) {
+				timeAgo = `${minutesAgo} phút trước`
+			} else {
+				timeAgo = 'vừa xong'
+			}
+			const day = cmtDate.getDate()
+			const month = cmtDate.getMonth() + 1
+			const year = cmtDate.getFullYear()
+			const formattedDateTime = `${timeAgo} vào ${day}/${month}/${year}`
+
+			var commentHTML = `
+			<div class="card container p-0 border-0">
+				<div class="card-body" style="padding-right: 0px; padding-left: 0px;">				
+					<div class="d-flex flex-start">
+						<img class="rounded-circle shadow-1-strong me-3 bg-white"
+							src="<%=curUser.avatarURL%>" alt="avatar" width="60"
+							height="60" />
+						<div class="flex-grow-1 flex-shrink-1 bg-light rounded-2">
+							<div>
+								<div class="d-flex justify-content-between align-items-center" style="padding-left: 16px;">
+									<p class="mb-1">
+										<a class="userLink" href="/profile/<%=curUser.userID%>"><span><b> <%=curUser.profileName%></b></span></a>
+										<span class="small">- ${formattedDateTime}</span>
+									</p>
+									<div class="dropdown">
+										<button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+										<ul class="dropdown-menu" data-cmtID="${cmtID}" data-userID="${userID}">
+											<li><a class="dropdown-item delcmt">Xoá bình luận</a></li>
+										</ul>
+									</div>
+								</div>
+								<div style="padding: 0 16px 0 16px;">
+									<p>
+										${commentContent}
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			`
+			newComment.innerHTML = commentHTML
+			addSection.insertBefore(newComment, addSection.firstChild)
+
+		})
+		
+		
+	</script>
+	<% } %>
+	
+
+	<script>
+		const followbtn = document.getElementById('followbtn')
+		heartIcon = followbtn.querySelector('i')
+		checkbookmark = '<%=checkbookmark%>'
+		// console.log(checkbookmark)
+		if(checkbookmark != '') {
+			heartIcon.classList.remove('far');
+			heartIcon.classList.add('fas');
+		}
+		followbtn.addEventListener('click', async function(e) {
+			if ('<%=curUser.permission%>' != '3') {
+				if (heartIcon.classList.contains('far')) {
+					heartIcon.classList.remove('far');
+					heartIcon.classList.add('fas');
+				} else {
+					heartIcon.classList.remove('fas');
+					heartIcon.classList.add('far');
+				}
+				const path = `/book/<%=book.bookID%>/bookmark`
+				const objID = checkbookmark || ''
+				const curUserID = '<%=curUser.userID%>'				
+				try {
+					const res = await fetch(path, {
+						method: 'post',
+						body: JSON.stringify({objID, curUserID}),
+						headers: {'Content-Type': 'application/json'},
+					});
+					checkbookmark = await res.json()
+					checkbookmark = checkbookmark.objID
+					}
+				catch (err) {
+					console.log(err);
+				}
+			}
+			else {
+				alert('Vui lòng đăng nhập để theo dõi.')
+				return
+			}
+			
+		})
+	</script>
+
+	<script>
+		document.getElementById('ratingButton').addEventListener('mouseenter', function() {
+			this.querySelector('.star-rating').classList.add('displayBlock')
+			this.querySelector('.rating-title').classList.add('displayNone')
+			this.querySelector('.star-rating').classList.remove('displayNone')
+			this.querySelector('.rating-title').classList.remove('displayBlock')
+			// console.log('in')
+		});
+
+		document.getElementById('ratingButton').addEventListener('mouseleave', function() {
+			this.querySelector('.star-rating').classList.add('displayNone')
+			this.querySelector('.rating-title').classList.add('displayBlock')
+			this.querySelector('.star-rating').classList.remove('displayBlock')
+			this.querySelector('.rating-title').classList.remove('displayNone')
+			// console.log('out')
+		});
+
+		const starLabels = document.querySelectorAll(".star-rating label.star");
+		starLabels.forEach(function(label) {
+        label.addEventListener("click", async function() {
+			if ('<%=curUser.permission%>' != '3') {
+				const score = this.previousElementSibling.value;
+				console.log("Clicked on star with value:", score);
+				const path = `/book/<%=book.bookID%>/rating`
+				const curUserID = '<%=curUser.userID%>'				
+				try {
+					const res = await fetch(path, {
+						method: 'post',
+						body: JSON.stringify({curUserID, score}),
+						headers: {'Content-Type': 'application/json'},
+					});
+					ok = await res.json()
+				}
+				catch (err) {
+					console.log(err);
+				}
+			}
+			else {
+				alert('Vui lòng đăng nhập để đánh giá.')
+				return
+			}
+			});
+		});
+	</script>
+
+	<script>
+		// Smooth scrolling function
+		document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+			anchor.addEventListener('click', function (e) {
+				e.preventDefault();
+				
+				document.querySelector(this.getAttribute('href')).scrollIntoView({
+					behavior: 'smooth'
+				});
+			});
+		});
+	</script>
+</body>
+</html>
+

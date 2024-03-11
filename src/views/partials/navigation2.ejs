@@ -1,0 +1,38 @@
+<!-- Navigator bar -->
+<nav class="navbar navbar-expand-lg bg-transparent">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img class="rounded-2" src="./Image/logo.png" alt="Bootstrap" width="80" height="40">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse col-12" id="navbarSupportedContent">
+            <ul class="navbar-nav d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="/manageUser">Quản lý User</a></b>
+                </li>
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="/manage">Kho sách</a></b>
+                </li>
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="/manageComment">Quản lý bình luận</a></b>
+                </li>
+                
+                <li class="nav-item rounded-3">
+                    <b><a class="nav-link" href="/managePending">Duyệt sách</a></b>
+                </li>
+                <div style="width: 354px;"></div>
+    
+                <li class="nav-item ml-auto rounded-3">
+                    <%- include("./avtDropDown") -%>
+                </li>
+
+            </ul>
+
+            <!-- <ul class="nav-item ml-auto rounded-3">
+                <%- include("./avtDropDown2") -%>
+            </ul> -->
+        </div>
+    </div>
+</nav>

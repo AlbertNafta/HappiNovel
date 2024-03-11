@@ -1,0 +1,162 @@
+
+<form id="form5" style="display: none;">
+    <div class="d-flex justify-content-center rounded-2 section-title" style="margin-bottom: 20px;">
+        <span><i class="fa-solid fa-book-open"></i>  THÔNG TIN CHƯƠNG</span>
+    </div>
+    <input type="hidden" id="volObjID" name="volObjID">
+    <input type="hidden" id="bookID" name="bookID">
+    <!-- Tên sách -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tên sách <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <input type="text" class="form-control" name="title" disabled>
+        </div>
+    </div>
+
+    <!-- Tác giả -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tác giả <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <input type="text" class="form-control" name="author" disabled>
+        </div>
+    </div>
+
+    <!-- Tên tập -->
+    <div class="row mb-3 me-3">
+        <div class="col-md-2 text-end align-self-md-center">
+            <b>Tên tập <span style="color: red;">*</span></b>
+        </div>
+        <div class="col-md-10">
+            <input type="text" class="form-control" placeholder="Tên tập" name="volName" required pattern="\S(.*\S)?" title="This field is required">
+        </div>
+    </div>
+
+    <div class="row mb-3 me-3">
+        <div class="col-md-10 float-end">
+            <button class="btn btn-danger float-end" value="delete"><b>Xoá tập</b></button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success" value="update"><b>Cập nhật</b></button>
+        </div>
+    </div>
+    <!-- <div class="row" style="visibility: hidden;">space</div>
+    <div class="row" style="visibility: hidden;">space</div>
+    <div class="row" style="visibility: hidden;">space</div>
+    <div class="row" style="visibility: hidden;">space</div>
+    <div class="row" style="visibility: hidden;">space</div>
+    <div class="row" style="visibility: hidden;">space</div> -->
+        
+</form>
+
+<script>
+    const volList = document.querySelectorAll(".bg-volume")
+    for (let i = 0; i < volList.length; i++) {
+        const vol = volList[i]
+        vol.addEventListener('click', async function(e) {
+            volID = vol.attributes[2].nodeValue
+            try {
+                const res = await fetch('/upload/reviewVolume', {
+                    method: 'post',
+                    body: JSON.stringify({volID}),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                let data = await res.json()
+                let volData = data.vol
+                let bookData = data.book[0]
+                form5.querySelector('[name="volObjID"]').setAttribute("value", volData._id)
+                form5.querySelector('[name="bookID"]').setAttribute("value", bookData.bookID)
+                form5.querySelector('[name="title"]').setAttribute("value", bookData.title)
+                form5.querySelector('[name="author"]').setAttribute("value", bookData.authorName)
+                form5.querySelector('[name="volName"]').setAttribute("value", volData.volName)
+                showContent("form5")
+            }
+            catch (err) {
+                console.log(err)
+            }
+        })
+    }
+</script>
+
+<script>
+    form5 = document.querySelector("#form5")
+    form5.addEventListener('submit', async function(e) {
+        e.preventDefault()
+        var clickedButtonValue = event.submitter.getAttribute('value');
+        if (clickedButtonValue == 'update') {
+            const volObjID= form5.volObjID.value
+            const volName = form5.volName.value
+            
+            try {
+            const res = await fetch('/upload/updateVolume', {
+                method: 'post',
+                body: JSON.stringify({volObjID, volName}),
+                    headers: {'Content-Type': 'application/json'}
+            });
+            const data = await res.json()
+
+            //   console.log(tinymce.get('summary').getContent())
+            attachModal("Cập nhật thông tin tập thành công.")
+                var modalConfirm = function(){
+                    $("#modalbtn1").on("click", function(){
+                        location.reload()
+                        $("#modal2btn").modal('hide');
+                    });
+                    
+                    $("#modalbtn2").on("click", function(){
+                        location.reload()
+                        $("#modal2btn").modal('hide');
+                    });
+                };
+                await modalConfirm()
+            }
+            catch (err) {
+                console.log(err);
+            } 
+        } else if (clickedButtonValue === 'delete') {
+            attachModal("Bạn chắc chắn muốn xoá tập này chứ?")
+            var modalConfirm = function(){
+                $("#modalbtn1").on("click", function(){
+                    location.reload()
+                    $("#modal2btn").modal('hide');
+                });
+                
+                $("#modalbtn2").on("click", async function(){
+                    $("#modal2btn").modal('hide');
+                    const volObjID= form5.volObjID.value
+                    const bookID = form5.bookID.value
+                    try {
+                    const res = await fetch('/upload/deleteVolume', {
+                        method: 'post',
+                        body: JSON.stringify({bookID, volObjID}),
+                            headers: {'Content-Type': 'application/json'}
+                    });
+                    const data = await res.json()
+
+                    //   console.log(tinymce.get('summary').getContent())
+                    attachModal("Xoá tập thành công.")
+                    var modalConfirm = function(){
+                        $("#modalbtn1").on("click", function(){
+                            location.reload()
+                            $("#modal2btn").modal('hide');
+                        });
+                        
+                        $("#modalbtn2").on("click", function(){
+                            location.reload()
+                            $("#modal2btn").modal('hide');
+                        });
+                    };
+                    await modalConfirm()
+                    }
+                    catch (err) {
+                        console.log(err);
+                    } 
+                });
+            };
+            await modalConfirm()
+        }        
+    })
+</script>

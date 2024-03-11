@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Đăng ký</title>
+    <link rel="icon" href="/Image/logo-circle.png" style="border-radius: 50%;">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/stylesUpload.css">
+    <style>
+      .form-label{
+        font-weight: bolder;
+      }
+      h1{
+        text-align: center;
+      }
+      .nav{
+        height: 50px;
+        background-color:whitesmoke;
+      }
+      #bc:hover{
+        color: black;
+      }
+      
+    </style>
+
+    
+</head>
+<body style="background-color: white;">
+    <!-- Navigator bar -->
+    <nav class="navbar navbar-expand-lg bg-transparent">
+      <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+              <img class="rounded-2" src="./Image/logo.png" alt="Bootstrap" width="60" height="30">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav">
+                  <li class="nav-item rounded-3">
+                      <b><a class="nav-link" href="/login">Đăng nhập</a></b>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+  
+  <%- include("./partials/coverImg") -%>
+
+  <!-- Main section -->
+    <form action="\register" method="post" class="container mt-3" style="border:solid whitesmoke 2px;
+    width:  800px;
+    align-items: center;">
+      <div class="row ">
+        <div style="height: 50px; background-color: whitesmoke">
+          <label for="" class="mt-2">Đăng ký</label>
+        </div>
+
+
+        <div class="row mb-3 mt-3">
+          <label for="validationServer01" class="col-sm-3 col-form-label">Tên đăng nhập</label>
+          <div class="col-sm-9">
+            <input type="username" class="form-control" id="validationServer01" name="username" required>
+            <div class="usernameError" style="color: red;"></div>
+          </div>
+        </div>
+
+
+        <div class="row mb-3">
+          <label for="validationServer02" class="col-sm-3 col-form-label">Số điện thoại</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="validationServer02" name="sdt" required>
+            <div class="sdtError" style="color: red;"></div>
+          </div>
+        </div>
+
+
+        <div class="row mb-3">
+          <label for="validationServer03" class="col-sm-3 col-form-label">Họ và tên</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" id="validationServer03" name="profileName" required>
+            <div class="profileNameError" style="color: red;"></div>
+          </div>
+        </div>
+
+
+        <div class="row mb-3">
+          <label for="validationServer04" class="col-sm-3 col-form-label">Ngày sinh</label>
+          <div class="col-sm-9">
+            <input type="date" class="form-control" id="validationServer04" name="dob" required>
+            <div class="dobError" style="color: red;"></div>
+          </div>
+        </div>     
+        
+
+        <div class="row mb-3">
+          <label for="validationServer05" class="col-sm-3 col-form-label">Mật khẩu</label>
+          <div class="col-sm-9">
+            <input type="password" class="form-control" id="validationServer05" name="password" required>
+            <div class="passwordError" style="color: red;"></div>
+          </div>
+        </div>  
+
+          <div class="mt-3 mb-3" style="text-align: center;">
+            <button id="regbtn" class="btn btn-primary">Đăng ký</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <%- include("./partials/modal2btn") -%>
+
+    <!-- Add script file -->
+    <script>
+      const form = document.querySelector('form');
+      const profileNameError = document.querySelector('.profileNameError');
+      const usernameError = document.querySelector('.usernameError');
+      const passwordError = document.querySelector('.passwordError');
+      const sdtError = document.querySelector('.sdtError');
+      const dobError = document.querySelector('.dobError');
+      // console.log(form)
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        profileNameError.innerHTML = '';
+        usernameError.innerHTML = '';
+        passwordError.innerHTML = '';
+        sdtError.innerHTML = '';
+        dobError.innerHTML = '';
+
+        const profileName = form.profileName.value;
+        const username = form.username.value;
+        const password = form.password.value;
+        const sdt = form.sdt.value;
+        const dob = form.dob.value;
+
+        try {
+          const res = await fetch('/register', {
+            method: 'post',
+            body: JSON.stringify({profileName, username, password, sdt, dob}),
+            headers: {'Content-Type': 'application/json'}
+          });
+          
+          const data = await res.json()
+          console.log(data)
+          if (data.errors){
+            profileNameError.innerHTML = data.errors.profileName;
+            usernameError.innerHTML = data.errors.username;
+            passwordError.innerHTML = data.errors.password;
+            sdtError.innerHTML = data.errors.sdt;
+            dobError.innerHTML = data.errors.dob;
+          }
+          if (data.user) {
+            
+            attachModal("Đăng ký tài khoản thành công, chuyển tiếp đến trang đăng nhập.")
+            // $("#modal2btn").modal('show');
+
+            var modalConfirm = function(){
+              $("#modalbtn1").on("click", function(){
+                location.assign('/login')
+                $("#modal2btn").modal('hide');
+              });
+              
+              $("#modalbtn2").on("click", function(){
+                location.assign('/login')
+                $("#modal2btn").modal('hide');
+              });
+            };
+
+            await modalConfirm()
+          }
+        }
+        catch (err) {
+          console.log(err);
+        } 
+      })
+    </script>
+</body>
+</html>
